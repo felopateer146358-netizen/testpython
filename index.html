@@ -1,585 +1,1028 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="google-site-verification" content="الكود_الذي_نسخته_من_جوجل" />
-<title>Python Master Quiz</title>
-<style>
-:root{
-  --bg:#0a0e1a;--card:#111827;--gold:#f5a623;
-  --correct:#10b981;--wrong:#ef4444;
-  --text:#f1f5f9;--border:#1e293b;--opt:#1a2236;
-  --blue:#3b82f6;--purple:#8b5cf6;
-}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.orb{position:absolute;width:500px;height:500px;border-radius:50%;filter:blur(120px);z-index:-1;opacity:.13;animation:orbmove 9s infinite alternate}
-.orb-1{background:var(--gold);top:-15%;left:-15%}
-.orb-2{background:var(--blue);bottom:-15%;right:-15%}
-.orb-3{background:var(--purple);top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;opacity:.08}
-@keyframes orbmove{from{transform:translate(0,0)}to{transform:translate(50px,30px)}}
-.orb-3{animation:none}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="google-site-verification" content="wl948B6IX3zDUlsFISwDh4fWIUgu184jDOBG-XGpOfM" />
+  <title>Python Master Quiz</title>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --card: #111827;
+      --gold: #f5a623;
+      --correct: #10b981;
+      --wrong: #ef4444;
+      --text: #f1f5f9;
+      --border: #1e293b;
+      --opt: #1a2236;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+    }
 
-.wrap{width:95%;max-width:750px;z-index:10}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif
+    }
 
-/* ── CARD ── */
-.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:44px;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.55);text-align:center;display:none}
-.card.active{display:block;animation:fadeUp .45s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),#f97316);border-radius:22px 22px 0 0}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative
+    }
 
-/* ── START ── */
-.logo{font-size:52px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,var(--gold),#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-.logo-sub{color:#64748b;font-size:14px;margin-bottom:28px}
-.badge-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
-.badge{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);color:var(--gold);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700}
+    .orb {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: .13;
+      animation: orbmove 9s infinite alternate
+    }
 
-/* Settings panel */
-.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:26px;text-align:left}
-.setting-box{background:#0d1424;border:1px solid var(--border);border-radius:12px;padding:14px}
-.setting-box label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px}
-.setting-box select,.setting-box input[type=range]{width:100%;background:var(--opt);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 10px;font-size:14px;outline:none;cursor:pointer}
-.setting-box select option{background:var(--card)}
-.range-row{display:flex;align-items:center;gap:10px}
-.range-val{color:var(--gold);font-weight:800;font-size:16px;min-width:28px;text-align:center}
-input[type=range]{accent-color:var(--gold)}
+    .orb-1 {
+      background: var(--gold);
+      top: -15%;
+      left: -15%
+    }
 
-/* ── GAME ── */
-.game-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:8px}
-.g-left,.g-right{display:flex;gap:10px;align-items:center}
-.chip{background:#0d1424;border:1px solid var(--border);border-radius:10px;padding:6px 14px;font-size:13px;font-weight:700;color:var(--gold)}
-.chip.timer-chip{min-width:66px;text-align:center}
-.chip.timer-chip.warning{color:var(--wrong);border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08);animation:pulse .5s infinite alternate}
-@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.04)}}
-.category-tag{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+    .orb-2 {
+      background: var(--blue);
+      bottom: -15%;
+      right: -15%
+    }
 
-/* Progress bar */
-.prog-wrap{background:#0d1424;border-radius:999px;height:6px;margin-bottom:24px;overflow:hidden}
-.prog-bar{height:100%;background:linear-gradient(90deg,var(--gold),#f97316);border-radius:999px;transition:width .4s ease}
+    .orb-3 {
+      background: var(--purple);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      opacity: .08
+    }
 
-.question-text{font-size:22px;font-weight:700;margin-bottom:28px;line-height:1.45;min-height:66px}
-.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;text-align:left}
-.option-btn{background:var(--opt);border:2px solid var(--border);color:white;padding:16px 14px;border-radius:13px;cursor:pointer;font-size:15px;transition:.25s;display:flex;align-items:center;gap:10px;line-height:1.3}
-.option-btn:hover:not(:disabled){border-color:var(--gold);background:#1f2d47;transform:translateY(-1px)}
-.option-letter{background:rgba(245,166,35,.12);color:var(--gold);padding:4px 9px;border-radius:6px;font-weight:900;font-size:13px;flex-shrink:0}
-.correct{border-color:var(--correct)!important;background:rgba(16,185,129,.12)!important}
-.wrong{border-color:var(--wrong)!important;background:rgba(239,68,68,.12)!important}
-.option-btn:disabled{cursor:not-allowed;opacity:.8}
+    @keyframes orbmove {
+      from {
+        transform: translate(0, 0)
+      }
 
-/* Explanation box */
-#explanation{display:none;margin-top:18px;padding:14px 16px;border-radius:12px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);font-size:14px;color:#93c5fd;text-align:left;line-height:1.6}
-#explanation.show{display:block;animation:fadeUp .3s ease}
+      to {
+        transform: translate(50px, 30px)
+      }
+    }
 
-.btn-main{background:linear-gradient(135deg,var(--gold),#f97316);color:#000;border:none;padding:15px 40px;border-radius:12px;font-weight:900;cursor:pointer;margin-top:22px;transition:.3s;width:100%;font-size:15px;letter-spacing:.5px}
-.btn-main:hover{transform:scale(1.02);box-shadow:0 0 24px rgba(245,166,35,.4)}
+    .orb-3 {
+      animation: none
+    }
 
-/* Lifelines */
-.lifeline-row{display:flex;gap:10px;justify-content:center;margin-top:18px}
-.ll-btn{background:#0d1424;border:1px solid var(--border);color:var(--gold);border-radius:10px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s}
-.ll-btn:hover:not(:disabled){background:rgba(245,166,35,.1);border-color:var(--gold)}
-.ll-btn:disabled{opacity:.35;cursor:not-allowed}
-.ll-btn.used{opacity:.3;text-decoration:line-through}
+    .wrap {
+      width: 95%;
+      max-width: 750px;
+      z-index: 10
+    }
 
-/* ── RESULT ── */
-.result-emoji{font-size:64px;margin-bottom:10px}
-.result-title{font-size:30px;font-weight:900;color:var(--gold);margin-bottom:6px}
-.score-big{font-size:62px;font-weight:900;margin:10px 0}
-.score-sub{color:#64748b;font-size:14px;margin-bottom:22px}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
-.stat-box{background:#0d1424;border:1px solid var(--border);border-radius:12px;padding:14px}
-.stat-box .sv{font-size:22px;font-weight:800;color:var(--gold)}
-.stat-box .sl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
-.high-score-banner{background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.25);border-radius:12px;padding:12px;margin-bottom:18px;font-size:14px;color:var(--gold);display:none}
-.high-score-banner.show{display:block;animation:fadeUp .4s ease}
-.btn-row{display:flex;gap:12px}
-.btn-secondary{background:transparent;border:2px solid var(--border);color:var(--text);padding:14px;border-radius:12px;font-weight:700;cursor:pointer;flex:1;transition:.2s;font-size:14px}
-.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
-</style>
+    /* ── CARD ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 44px;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .55);
+      text-align: center;
+      display: none
+    }
+
+    .card.active {
+      display: block;
+      animation: fadeUp .45s ease
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), #f97316);
+      border-radius: 22px 22px 0 0
+    }
+
+    /* ── START ── */
+    .logo {
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--gold), #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px
+    }
+
+    .logo-sub {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 28px
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px
+    }
+
+    .badge {
+      background: rgba(245, 166, 35, .1);
+      border: 1px solid rgba(245, 166, 35, .25);
+      color: var(--gold);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700
+    }
+
+    /* Settings panel */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 26px;
+      text-align: left
+    }
+
+    .setting-box {
+      background: #0d1424;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px
+    }
+
+    .setting-box label {
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 8px
+    }
+
+    .setting-box select,
+    .setting-box input[type=range] {
+      width: 100%;
+      background: var(--opt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer
+    }
+
+    .setting-box select option {
+      background: var(--card)
+    }
+
+    .range-row {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .range-val {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 16px;
+      min-width: 28px;
+      text-align: center
+    }
+
+    input[type=range] {
+      accent-color: var(--gold)
+    }
+
+    /* ── GAME ── */
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .g-left,
+    .g-right {
+      display: flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    .chip {
+      background: #0d1424;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold)
+    }
+
+    .chip.timer-chip {
+      min-width: 66px;
+      text-align: center
+    }
+
+    .chip.timer-chip.warning {
+      color: var(--wrong);
+      border-color: rgba(239, 68, 68, .4);
+      background: rgba(239, 68, 68, .08);
+      animation: pulse .5s infinite alternate
+    }
+
+    @keyframes pulse {
+      from {
+        transform: scale(1)
+      }
+
+      to {
+        transform: scale(1.04)
+      }
+    }
+
+    .category-tag {
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px
+    }
+
+    /* Progress bar */
+    .prog-wrap {
+      background: #0d1424;
+      border-radius: 999px;
+      height: 6px;
+      margin-bottom: 24px;
+      overflow: hidden
+    }
+
+    .prog-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #f97316);
+      border-radius: 999px;
+      transition: width .4s ease
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      line-height: 1.45;
+      min-height: 66px
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      text-align: left
+    }
+
+    .option-btn {
+      background: var(--opt);
+      border: 2px solid var(--border);
+      color: white;
+      padding: 16px 14px;
+      border-radius: 13px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: .25s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.3
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--gold);
+      background: #1f2d47;
+      transform: translateY(-1px)
+    }
+
+    .option-letter {
+      background: rgba(245, 166, 35, .12);
+      color: var(--gold);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-weight: 900;
+      font-size: 13px;
+      flex-shrink: 0
+    }
+
+    .correct {
+      border-color: var(--correct) !important;
+      background: rgba(16, 185, 129, .12) !important
+    }
+
+    .wrong {
+      border-color: var(--wrong) !important;
+      background: rgba(239, 68, 68, .12) !important
+    }
+
+    .option-btn:disabled {
+      cursor: not-allowed;
+      opacity: .8
+    }
+
+    /* Explanation box */
+    #explanation {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(59, 130, 246, .08);
+      border: 1px solid rgba(59, 130, 246, .25);
+      font-size: 14px;
+      color: #93c5fd;
+      text-align: left;
+      line-height: 1.6
+    }
+
+    #explanation.show {
+      display: block;
+      animation: fadeUp .3s ease
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--gold), #f97316);
+      color: #000;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 22px;
+      transition: .3s;
+      width: 100%;
+      font-size: 15px;
+      letter-spacing: .5px
+    }
+
+    .btn-main:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 24px rgba(245, 166, 35, .4)
+    }
+
+    /* Lifelines */
+    .lifeline-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 18px
+    }
+
+    .ll-btn {
+      background: #0d1424;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s
+    }
+
+    .ll-btn:hover:not(:disabled) {
+      background: rgba(245, 166, 35, .1);
+      border-color: var(--gold)
+    }
+
+    .ll-btn:disabled {
+      opacity: .35;
+      cursor: not-allowed
+    }
+
+    .ll-btn.used {
+      opacity: .3;
+      text-decoration: line-through
+    }
+
+    /* ── RESULT ── */
+    .result-emoji {
+      font-size: 64px;
+      margin-bottom: 10px
+    }
+
+    .result-title {
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 6px
+    }
+
+    .score-big {
+      font-size: 62px;
+      font-weight: 900;
+      margin: 10px 0
+    }
+
+    .score-sub {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 22px
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px
+    }
+
+    .stat-box {
+      background: #0d1424;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px
+    }
+
+    .stat-box .sv {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gold)
+    }
+
+    .stat-box .sl {
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-top: 3px
+    }
+
+    .high-score-banner {
+      background: rgba(245, 166, 35, .08);
+      border: 1px solid rgba(245, 166, 35, .25);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      color: var(--gold);
+      display: none
+    }
+
+    .high-score-banner.show {
+      display: block;
+      animation: fadeUp .4s ease
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--border);
+      color: var(--text);
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 1;
+      transition: .2s;
+      font-size: 14px
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold)
+    }
+  </style>
 </head>
+
 <body>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
-<div class="wrap">
+  <div class="wrap">
 
-  <!-- START -->
-  <div id="start-screen" class="card active">
-    <div class="logo">PYTHON MASTER</div>
-    <div class="logo-sub">Felo Edition · 150 Questions Bank</div>
-    <div class="badge-row">
-      <span class="badge">🐍 150 Questions</span>
-      <span class="badge">🎯 5 Categories</span>
-      <span class="badge">⏱ Timer Mode</span>
-      <span class="badge">💡 Lifelines</span>
-    </div>
-    <div class="settings-grid">
-      <div class="setting-box">
-        <label>Number of Questions</label>
-        <div class="range-row">
-          <input type="range" id="q-count-range" min="5" max="30" step="5" value="10"/>
-          <span class="range-val" id="q-count-display">10</span>
+    <!-- START -->
+    <div id="start-screen" class="card active">
+      <div class="logo">PYTHON MASTER</div>
+      <div class="logo-sub">Felo Edition · 150 Questions Bank</div>
+      <div class="badge-row">
+        <span class="badge">🐍 150 Questions</span>
+        <span class="badge">🎯 5 Categories</span>
+        <span class="badge">⏱ Timer Mode</span>
+        <span class="badge">💡 Lifelines</span>
+      </div>
+      <div class="settings-grid">
+        <div class="setting-box">
+          <label>Number of Questions</label>
+          <div class="range-row">
+            <input type="range" id="q-count-range" min="5" max="30" step="5" value="10" />
+            <span class="range-val" id="q-count-display">10</span>
+          </div>
+        </div>
+        <div class="setting-box">
+          <label>Category</label>
+          <select id="cat-select">
+            <option value="all">All Categories</option>
+            <option value="basics">Basics &amp; Syntax</option>
+            <option value="data">Data Types &amp; Structures</option>
+            <option value="functions">Functions &amp; OOP</option>
+            <option value="advanced">Advanced Python</option>
+            <option value="stdlib">Standard Library</option>
+          </select>
+        </div>
+        <div class="setting-box">
+          <label>Difficulty</label>
+          <select id="diff-select">
+            <option value="all">All Levels</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <div class="setting-box">
+          <label>Timer per Question</label>
+          <select id="timer-select">
+            <option value="0">No Timer</option>
+            <option value="15">15 seconds</option>
+            <option value="20" selected>20 seconds</option>
+            <option value="30">30 seconds</option>
+            <option value="45">45 seconds</option>
+          </select>
         </div>
       </div>
-      <div class="setting-box">
-        <label>Category</label>
-        <select id="cat-select">
-          <option value="all">All Categories</option>
-          <option value="basics">Basics &amp; Syntax</option>
-          <option value="data">Data Types &amp; Structures</option>
-          <option value="functions">Functions &amp; OOP</option>
-          <option value="advanced">Advanced Python</option>
-          <option value="stdlib">Standard Library</option>
-        </select>
+      <button class="btn-main" onclick="startGame()">▶ START QUIZ</button>
+    </div>
+
+    <!-- GAME -->
+    <div id="game-screen" class="card">
+      <div class="game-header">
+        <div class="g-left">
+          <div class="chip" id="q-label">Q 1/10</div>
+          <div class="chip" id="diff-chip">EASY</div>
+        </div>
+        <div class="g-right">
+          <div class="chip timer-chip" id="timer-chip" style="display:none">⏱ 20</div>
+          <div class="chip" id="prize-chip">$0</div>
+        </div>
       </div>
-      <div class="setting-box">
-        <label>Difficulty</label>
-        <select id="diff-select">
-          <option value="all">All Levels</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
+      <div class="prog-wrap">
+        <div class="prog-bar" id="prog-bar" style="width:0%"></div>
       </div>
-      <div class="setting-box">
-        <label>Timer per Question</label>
-        <select id="timer-select">
-          <option value="0">No Timer</option>
-          <option value="15">15 seconds</option>
-          <option value="20" selected>20 seconds</option>
-          <option value="30">30 seconds</option>
-          <option value="45">45 seconds</option>
-        </select>
+      <div class="category-tag" id="cat-tag">CATEGORY</div>
+      <div class="question-text" id="question-text">Loading...</div>
+      <div class="options-grid" id="options-grid"></div>
+      <div id="explanation"></div>
+      <div class="lifeline-row">
+        <button class="ll-btn" id="ll-50" onclick="lifeline50()" title="Remove 2 wrong answers">50/50</button>
+        <button class="ll-btn" id="ll-skip" onclick="lifelineSkip()" title="Skip this question">⏭ Skip</button>
+        <button class="ll-btn" id="ll-hint" onclick="lifelineHint()" title="Show a hint">💡 Hint</button>
+      </div>
+      <button id="next-btn" class="btn-main" style="display:none" onclick="nextQuestion()">NEXT QUESTION →</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result-screen" class="card">
+      <div class="result-emoji" id="result-emoji">🏆</div>
+      <div class="result-title" id="result-title">EXCELLENT!</div>
+      <div class="score-big" id="final-prize">$0</div>
+      <div class="score-sub" id="score-sub">Loading...</div>
+      <div class="high-score-banner" id="hs-banner">🎉 New High Score!</div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="sv" id="r-correct">0</div>
+          <div class="sl">Correct</div>
+        </div>
+        <div class="stat-box">
+          <div class="sv" id="r-wrong">0</div>
+          <div class="sl">Wrong</div>
+        </div>
+        <div class="stat-box">
+          <div class="sv" id="r-acc">0%</div>
+          <div class="sl">Accuracy</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="goStart()">⚙ Settings</button>
+        <button class="btn-main" style="flex:2;margin-top:0" onclick="playAgain()">↺ Play Again</button>
       </div>
     </div>
-    <button class="btn-main" onclick="startGame()">▶ START QUIZ</button>
+
   </div>
 
-  <!-- GAME -->
-  <div id="game-screen" class="card">
-    <div class="game-header">
-      <div class="g-left">
-        <div class="chip" id="q-label">Q 1/10</div>
-        <div class="chip" id="diff-chip">EASY</div>
-      </div>
-      <div class="g-right">
-        <div class="chip timer-chip" id="timer-chip" style="display:none">⏱ 20</div>
-        <div class="chip" id="prize-chip">$0</div>
-      </div>
-    </div>
-    <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
-    <div class="category-tag" id="cat-tag">CATEGORY</div>
-    <div class="question-text" id="question-text">Loading...</div>
-    <div class="options-grid" id="options-grid"></div>
-    <div id="explanation"></div>
-    <div class="lifeline-row">
-      <button class="ll-btn" id="ll-50" onclick="lifeline50()" title="Remove 2 wrong answers">50/50</button>
-      <button class="ll-btn" id="ll-skip" onclick="lifelineSkip()" title="Skip this question">⏭ Skip</button>
-      <button class="ll-btn" id="ll-hint" onclick="lifelineHint()" title="Show a hint">💡 Hint</button>
-    </div>
-    <button id="next-btn" class="btn-main" style="display:none" onclick="nextQuestion()">NEXT QUESTION →</button>
-  </div>
+  <script>
+    /* ═══════════════════════════════════════
+       150-QUESTION BANK
+       Categories: basics | data | functions | advanced | stdlib
+       Difficulty: easy | medium | hard
+    ═══════════════════════════════════════ */
+    const ALL_QUESTIONS = [
+      /* ── BASICS & SYNTAX (30) ── */
+      {q: "Who created Python?", opts: ["James Gosling", "Guido van Rossum", "Dennis Ritchie", "Bjarne Stroustrup"], c: 1, cat: "basics", diff: "easy", exp: "Guido van Rossum created Python and released it in 1991."},
+      {q: "Which file extension is used for Python?", opts: [".pyt", ".pt", ".py", ".python"], c: 2, cat: "basics", diff: "easy", exp: "Python files use the .py extension."},
+      {q: "Which keyword starts a function in Python?", opts: ["function", "def", "define", "func"], c: 1, cat: "basics", diff: "easy", exp: "The 'def' keyword is used to define a function in Python."},
+      {q: "Python was first released in?", opts: ["1989", "1991", "1995", "2000"], c: 1, cat: "basics", diff: "easy", exp: "Python 0.9.0 was released in February 1991."},
+      {q: "Symbol used for single-line comments?", opts: ["//", "/*", "#", "--"], c: 2, cat: "basics", diff: "easy", exp: "In Python, # is used to write single-line comments."},
+      {q: "How do you output text in Python?", opts: ["echo()", "console()", "print()", "write()"], c: 2, cat: "basics", diff: "easy", exp: "print() is Python's built-in function for outputting text."},
+      {q: "Is Python case-sensitive?", opts: ["No", "Only for strings", "Yes", "Depends on OS"], c: 2, cat: "basics", diff: "easy", exp: "Python is fully case-sensitive. 'var' and 'Var' are different identifiers."},
+      {q: "What does 'pip' stand for?", opts: ["Python Install Pack", "Preferred Install Program", "Pip Installs Packages", "Process Item Plus"], c: 2, cat: "basics", diff: "easy", exp: "pip is a recursive acronym: 'Pip Installs Packages'."},
+      {q: "Which is a valid Python variable name?", opts: ["2var", "var-2", "var_2", "var 2"], c: 2, cat: "basics", diff: "easy", exp: "Variable names cannot start with a number, contain hyphens, or have spaces."},
+      {q: "Python is primarily?", opts: ["Compiled", "Interpreted", "Both", "Neither"], c: 1, cat: "basics", diff: "easy", exp: "Python is an interpreted language — code is executed line by line at runtime."},
+      {q: "What is PEP 8?", opts: ["A module", "A style guide", "A version", "A compiler"], c: 1, cat: "basics", diff: "easy", exp: "PEP 8 is Python's official style guide for writing clean, readable code."},
+      {q: "How do you import a module?", opts: ["get", "require", "import", "include"], c: 2, cat: "basics", diff: "easy", exp: "The 'import' keyword is used to include modules in Python."},
+      {q: "Correct way to write a multi-line string?", opts: ["\"\"\"text\"\"\"", "'text'", "#text", "(text)"], c: 0, cat: "basics", diff: "easy", exp: "Triple quotes (\"\"\" or ''') are used for multi-line strings in Python."},
+      {q: "What does 'pass' do in Python?", opts: ["Exits the program", "Does nothing (placeholder)", "Skips one iteration", "Raises an error"], c: 1, cat: "basics", diff: "easy", exp: "'pass' is a null statement used as a placeholder where code is required syntactically."},
+      {q: "Which operator is used for exponentiation?", opts: ["^", "exp()", "**", "^^"], c: 2, cat: "basics", diff: "easy", exp: "In Python, ** is the exponentiation operator. 2**3 = 8."},
+      {q: "Output of 2 ** 3?", opts: ["6", "8", "9", "5"], c: 1, cat: "basics", diff: "easy", exp: "2 ** 3 = 2 × 2 × 2 = 8."},
+      {q: "Floor division operator in Python?", opts: ["/", "//", "%", "**"], c: 1, cat: "basics", diff: "easy", exp: "// performs floor division, e.g. 7 // 2 = 3."},
+      {q: "Modulus operator in Python?", opts: ["/", "//", "%", "mod"], c: 2, cat: "basics", diff: "easy", exp: "% returns the remainder. 7 % 3 = 1."},
+      {q: "Operator used to compare two values?", opts: ["=", "==", "===", "is"], c: 1, cat: "basics", diff: "easy", exp: "== checks equality. = is assignment, === doesn't exist in Python."},
+      {q: "Logical AND operator in Python?", opts: ["&&", "and", "&", "AND"], c: 1, cat: "basics", diff: "easy", exp: "Python uses the keyword 'and' for logical AND operations."},
+      {q: "Logical OR operator in Python?", opts: ["||", "or", "|", "OR"], c: 1, cat: "basics", diff: "easy", exp: "Python uses the keyword 'or' for logical OR operations."},
+      {q: "Logical NOT operator in Python?", opts: ["!", "not", "~", "NO"], c: 1, cat: "basics", diff: "easy", exp: "Python uses the keyword 'not' for logical negation."},
+      {q: "Output of 'Hi' * 2?", opts: ["HiHi", "Hi Hi", "Error", "2Hi"], c: 0, cat: "basics", diff: "easy", exp: "String repetition: 'Hi' * 2 produces 'HiHi'."},
+      {q: "Statement to exit a loop?", opts: ["stop", "exit", "break", "quit"], c: 2, cat: "basics", diff: "easy", exp: "'break' terminates the nearest enclosing loop."},
+      {q: "Statement to skip to next iteration?", opts: ["skip", "next", "continue", "pass"], c: 2, cat: "basics", diff: "easy", exp: "'continue' skips the rest of the current loop iteration."},
+      {q: "Keyword for 'else if' in Python?", opts: ["else if", "elif", "ifnot", "otherwise"], c: 1, cat: "basics", diff: "easy", exp: "Python uses 'elif' instead of 'else if'."},
+      {q: "How to check data type of variable x?", opts: ["type(x)", "typeof(x)", "get_type(x)", "is_type(x)"], c: 0, cat: "basics", diff: "easy", exp: "type() is the built-in function to check an object's type."},
+      {q: "Convert integer to string?", opts: ["str()", "toString()", "convert()", "text()"], c: 0, cat: "basics", diff: "easy", exp: "str() converts an integer (or other type) to a string."},
+      {q: "Convert string to integer?", opts: ["int()", "toInt()", "convert()", "number()"], c: 0, cat: "basics", diff: "easy", exp: "int() converts a string or float to an integer."},
+      {q: "What is __name__ == '__main__' used for?", opts: ["Naming classes", "Running code only when the file is executed directly", "Importing modules", "Defining main()"], c: 1, cat: "basics", diff: "medium", exp: "This idiom allows code to run only when the script is executed directly, not when imported."},
 
-  <!-- RESULT -->
-  <div id="result-screen" class="card">
-    <div class="result-emoji" id="result-emoji">🏆</div>
-    <div class="result-title" id="result-title">EXCELLENT!</div>
-    <div class="score-big" id="final-prize">$0</div>
-    <div class="score-sub" id="score-sub">Loading...</div>
-    <div class="high-score-banner" id="hs-banner">🎉 New High Score!</div>
-    <div class="stats-row">
-      <div class="stat-box"><div class="sv" id="r-correct">0</div><div class="sl">Correct</div></div>
-      <div class="stat-box"><div class="sv" id="r-wrong">0</div><div class="sl">Wrong</div></div>
-      <div class="stat-box"><div class="sv" id="r-acc">0%</div><div class="sl">Accuracy</div></div>
-    </div>
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goStart()">⚙ Settings</button>
-      <button class="btn-main" style="flex:2;margin-top:0" onclick="playAgain()">↺ Play Again</button>
-    </div>
-  </div>
+      /* ── DATA TYPES & STRUCTURES (30) ── */
+      {q: "Which data type is immutable?", opts: ["List", "Dictionary", "Set", "Tuple"], c: 3, cat: "data", diff: "easy", exp: "Tuples are immutable — they cannot be changed after creation."},
+      {q: "Correct way to create a list?", opts: ["[]", "{}", "()", "<>"], c: 0, cat: "data", diff: "easy", exp: "Lists are created with square brackets []."},
+      {q: "Which creates a Python dictionary?", opts: ["[]", "{}", "()", "set()"], c: 1, cat: "data", diff: "easy", exp: "Dictionaries are created with curly braces {key: value}."},
+      {q: "Which is NOT a number type in Python?", opts: ["int", "float", "complex", "string"], c: 3, cat: "data", diff: "easy", exp: "string (str) is not a numeric type. int, float, and complex are."},
+      {q: "How to create a set in Python?", opts: ["set[]", "set()", "[]", "( )"], c: 1, cat: "data", diff: "easy", exp: "Sets are created with set() or curly braces {1,2,3}."},
+      {q: "Empty set is created by?", opts: ["{}", "set()", "set{}", "[]"], c: 1, cat: "data", diff: "medium", exp: "{} creates an empty dict, not a set. set() creates an empty set."},
+      {q: "What is a Tuple?", opts: ["Mutable ordered list", "Immutable ordered sequence", "A key-value store", "An unordered collection"], c: 1, cat: "data", diff: "easy", exp: "A tuple is an immutable, ordered sequence of elements."},
+      {q: "Which collection does NOT allow duplicates?", opts: ["List", "Tuple", "Set", "Dictionary values"], c: 2, cat: "data", diff: "easy", exp: "Sets automatically remove duplicate values."},
+      {q: "How to get the length of a list?", opts: ["len()", "size()", "count()", "length()"], c: 0, cat: "data", diff: "easy", exp: "len() returns the number of items in any sequence or collection."},
+      {q: "Method to add an item to a list?", opts: ["add()", "push()", "append()", "insert()"], c: 2, cat: "data", diff: "easy", exp: "append() adds a single item to the end of a list."},
+      {q: "Method to remove the last item from a list?", opts: ["delete()", "pop()", "remove()", "discard()"], c: 1, cat: "data", diff: "easy", exp: "pop() removes and returns the last item (or item at index) from a list."},
+      {q: "Which is a Floating point number?", opts: ["1", "1.0", "1+0j", "True"], c: 1, cat: "data", diff: "easy", exp: "1.0 is a float. 1 is int, 1+0j is complex, True is bool."},
+      {q: "Boolean values in Python start with?", opts: ["Lower case", "Capital letter", "Underscore", "Symbols"], c: 1, cat: "data", diff: "easy", exp: "Python Booleans are True and False — both start with a capital letter."},
+      {q: "Value of True + True in Python?", opts: ["0", "1", "2", "Error"], c: 2, cat: "data", diff: "medium", exp: "In Python, True is 1 and False is 0. So True + True = 1 + 1 = 2."},
+      {q: "What is None in Python?", opts: ["False", "0", "A special null object", "An empty string"], c: 2, cat: "data", diff: "easy", exp: "None is Python's null object, representing the absence of a value."},
+      {q: "Dictionary key must be?", opts: ["Mutable", "Immutable", "Any type", "Numbers only"], c: 1, cat: "data", diff: "medium", exp: "Dictionary keys must be immutable (strings, numbers, tuples are valid keys)."},
+      {q: "What does 'slicing' do?", opts: ["Deletes items", "Extracts a portion of a sequence", "Joins lists", "Sorts elements"], c: 1, cat: "data", diff: "easy", exp: "Slicing extracts a sub-sequence using [start:stop:step] notation."},
+      {q: "Output of [1,2,3][1:3]?", opts: ["[1,2]", "[2,3]", "[1,2,3]", "[3]"], c: 1, cat: "data", diff: "medium", exp: "Slicing [1:3] means from index 1 up to (not including) 3, giving [2,3]."},
+      {q: "How to reverse a list in place?", opts: ["list.reverse()", "reversed(list)", "list[::-1]", "list.sort(reverse=True)"], c: 0, cat: "data", diff: "medium", exp: "list.reverse() reverses the list in-place. reversed() returns an iterator."},
+      {q: "Which list method sorts in place?", opts: ["sort()", "ordered()", "arrange()", "sorted()"], c: 0, cat: "data", diff: "easy", exp: "list.sort() sorts the list in place. sorted() returns a new sorted list."},
+      {q: "How to merge two dictionaries in Python 3.9+?", opts: ["dict1 + dict2", "dict1 | dict2", "dict1.merge(dict2)", "merge(dict1, dict2)"], c: 1, cat: "data", diff: "hard", exp: "The | operator merges dictionaries in Python 3.9+."},
+      {q: "Output of list('abc')?", opts: ["['abc']", "['a','b','c']", "('a','b','c')", "Error"], c: 1, cat: "data", diff: "medium", exp: "list() on a string creates a list of individual characters."},
+      {q: "How to copy a list safely?", opts: ["list2 = list1", "list2 = list1.copy()", "list2 = list1[:]", "Both B and C"], c: 3, cat: "data", diff: "medium", exp: "Both .copy() and [:] create shallow copies. Assignment just copies the reference."},
+      {q: "What does dict.get('key', default) do?", opts: ["Raises KeyError if missing", "Returns default if key missing", "Adds the key", "Returns None always"], c: 1, cat: "data", diff: "medium", exp: "dict.get() safely retrieves a value, returning the default if the key doesn't exist."},
+      {q: "How to get all keys from a dictionary?", opts: ["dict.keys()", "dict.getkeys()", "keys(dict)", "dict.all()"], c: 0, cat: "data", diff: "easy", exp: "dict.keys() returns a view of all keys in the dictionary."},
+      {q: "String method to remove leading/trailing whitespace?", opts: ["clean()", "strip()", "trim()", "cut()"], c: 1, cat: "data", diff: "easy", exp: "strip() removes whitespace from both ends. lstrip() and rstrip() for one side."},
+      {q: "What is an f-string?", opts: ["Function string", "Formatted string literal", "Fixed string", "Fast string"], c: 1, cat: "data", diff: "easy", exp: "f-strings (f'...') allow inline expression evaluation inside string literals."},
+      {q: "String method to join a list?", opts: ["join()", "merge()", "concat()", "add()"], c: 0, cat: "data", diff: "easy", exp: "'separator'.join(list) joins list elements into a string."},
+      {q: "Output of 'python'.upper()?", opts: ["Python", "PYTHON", "python", "PYthon"], c: 1, cat: "data", diff: "easy", exp: ".upper() converts all characters to uppercase."},
+      {q: "What does enumerate() do?", opts: ["Counts elements", "Returns index-value pairs", "Sorts a list", "Filters a list"], c: 1, cat: "data", diff: "medium", exp: "enumerate() returns an iterator of (index, value) tuples for a sequence."},
 
-</div>
+      /* ── FUNCTIONS & OOP (30) ── */
+      {q: "Keyword to create a class?", opts: ["object", "define", "class", "new"], c: 2, cat: "functions", diff: "easy", exp: "'class' keyword is used to define a class in Python."},
+      {q: "What does 'self' represent in a class?", opts: ["Parent class", "The instance itself", "Global scope", "Static method"], c: 1, cat: "functions", diff: "easy", exp: "'self' refers to the current instance of the class."},
+      {q: "Name of the constructor method?", opts: ["__init__", "__start__", "__main__", "__create__"], c: 0, cat: "functions", diff: "easy", exp: "__init__ is called automatically when a new object is created."},
+      {q: "Lambda refers to?", opts: ["Classes", "Anonymous functions", "Loops", "Modules"], c: 1, cat: "functions", diff: "easy", exp: "A lambda is a small anonymous function defined with the lambda keyword."},
+      {q: "What does *args allow?", opts: ["Keyword arguments", "Variable number of positional arguments", "Default values", "Only one argument"], c: 1, cat: "functions", diff: "medium", exp: "*args collects extra positional arguments into a tuple."},
+      {q: "What does **kwargs allow?", opts: ["Multiple return values", "Variable keyword arguments", "Default arguments", "Only integers"], c: 1, cat: "functions", diff: "medium", exp: "**kwargs collects extra keyword arguments into a dictionary."},
+      {q: "What is a decorator in Python?", opts: ["A class method", "A function that modifies another function", "A type of variable", "A loop construct"], c: 1, cat: "functions", diff: "medium", exp: "A decorator is a function that wraps another function to modify its behavior."},
+      {q: "What is a generator?", opts: ["A function that returns a list", "A function using 'yield' to produce values lazily", "A type of decorator", "A class with __next__"], c: 1, cat: "functions", diff: "medium", exp: "Generators use 'yield' to produce values one at a time, saving memory."},
+      {q: "Keyword to produce a value from a generator?", opts: ["return", "yield", "produce", "give"], c: 1, cat: "functions", diff: "medium", exp: "'yield' pauses the function and sends a value to the caller."},
+      {q: "What is inheritance in OOP?", opts: ["Copying code", "A class acquiring properties of another class", "Deleting objects", "Importing modules"], c: 1, cat: "functions", diff: "easy", exp: "Inheritance allows a class to inherit attributes and methods from a parent class."},
+      {q: "How to call a parent class method?", opts: ["parent.method()", "super().method()", "base.method()", "this.method()"], c: 1, cat: "functions", diff: "medium", exp: "super() returns a proxy to the parent class, allowing access to its methods."},
+      {q: "What is encapsulation?", opts: ["Hiding implementation details", "Inheriting from a parent", "Writing loops", "Importing libraries"], c: 0, cat: "functions", diff: "medium", exp: "Encapsulation bundles data and methods while restricting direct access."},
+      {q: "What is polymorphism?", opts: ["Multiple inheritance", "One interface, many implementations", "Immutable variables", "Recursive functions"], c: 1, cat: "functions", diff: "medium", exp: "Polymorphism allows objects of different classes to be treated as the same type."},
+      {q: "Which keyword makes a variable class-level (not instance)?", opts: ["static", "class", "global", "shared"], c: 1, cat: "functions", diff: "hard", exp: "In Python, variables defined directly in the class body (not in __init__) are class-level."},
+      {q: "What does @staticmethod do?", opts: ["Binds to the instance", "Binds to the class", "Has no access to class or instance", "Makes it private"], c: 2, cat: "functions", diff: "hard", exp: "A static method has no access to cls or self — it's like a regular function inside a class."},
+      {q: "What does @classmethod do?", opts: ["Takes self as first arg", "Takes cls as first arg", "Has no arguments", "Is called automatically"], c: 1, cat: "functions", diff: "hard", exp: "@classmethod takes the class (cls) as its first argument, not the instance."},
+      {q: "What is a recursive function?", opts: ["A function with no return", "A function that calls itself", "A function with *args", "A generator"], c: 1, cat: "functions", diff: "easy", exp: "A recursive function is one that calls itself as part of its execution."},
+      {q: "Default return value of a function with no return?", opts: ["0", "False", "None", "Empty string"], c: 2, cat: "functions", diff: "easy", exp: "Functions without a return statement (or with bare return) return None."},
+      {q: "How to define a default parameter?", opts: ["def f(x=0)", "def f(x:0)", "def f(x->0)", "def f(default x)"], c: 0, cat: "functions", diff: "easy", exp: "Default parameters are defined with = in the function signature."},
+      {q: "What is a closure?", opts: ["A locked file", "A function remembering its enclosing scope", "A type of decorator", "An abstract class"], c: 1, cat: "functions", diff: "hard", exp: "A closure is a nested function that captures variables from its enclosing scope."},
+      {q: "What is 'duck typing'?", opts: ["Checking types explicitly", "If it walks like a duck... (type by behavior)", "Using dunder methods", "A testing pattern"], c: 1, cat: "functions", diff: "hard", exp: "Duck typing means an object's suitability is determined by its methods, not its type."},
+      {q: "How to make an attribute 'private' by convention?", opts: ["private attr", "attr()", "_attr or __attr", "#attr"], c: 2, cat: "functions", diff: "medium", exp: "Convention: _attr is 'protected', __attr triggers name mangling (stronger private)."},
+      {q: "What does __str__ do?", opts: ["Converts to bytes", "Returns string representation of the object", "Checks string type", "Compares objects"], c: 1, cat: "functions", diff: "medium", exp: "__str__ defines what print() or str() shows for an object."},
+      {q: "What is method overriding?", opts: ["Adding a new method", "Replacing a parent method in a child class", "Calling two methods at once", "Deleting a method"], c: 1, cat: "functions", diff: "medium", exp: "Method overriding means redefining a parent class method in the child class."},
+      {q: "How to handle exceptions in Python?", opts: ["try/except", "do/catch", "try/catch", "error/handle"], c: 0, cat: "functions", diff: "easy", exp: "Python uses try/except blocks. The 'except' block catches the exception."},
+      {q: "Keyword to raise an exception manually?", opts: ["throw", "raise", "error", "except"], c: 1, cat: "functions", diff: "easy", exp: "'raise' is used to manually trigger an exception."},
+      {q: "What does 'finally' do?", opts: ["Catches errors", "Runs always, regardless of exceptions", "Ends the program", "Skips the error"], c: 1, cat: "functions", diff: "medium", exp: "The 'finally' block always executes, whether or not an exception occurred."},
+      {q: "What is __repr__?", opts: ["Formal string representation for developers", "User-friendly string", "A decorator", "A class method"], c: 0, cat: "functions", diff: "hard", exp: "__repr__ returns an unambiguous string representation useful for debugging."},
+      {q: "What is a property in Python?", opts: ["A class variable", "A decorator that makes a method act like an attribute", "A type of dict", "A static method"], c: 1, cat: "functions", diff: "hard", exp: "@property allows a method to be accessed like an attribute without parentheses."},
+      {q: "What does 'map()' do?", opts: ["Filters elements", "Applies a function to every item in an iterable", "Sorts a list", "Flattens nested lists"], c: 1, cat: "functions", diff: "medium", exp: "map(function, iterable) applies the function to each element and returns an iterator."},
 
-<script>
-/* ═══════════════════════════════════════
-   150-QUESTION BANK
-   Categories: basics | data | functions | advanced | stdlib
-   Difficulty: easy | medium | hard
-═══════════════════════════════════════ */
-const ALL_QUESTIONS = [
-  /* ── BASICS & SYNTAX (30) ── */
-  {q:"Who created Python?",opts:["James Gosling","Guido van Rossum","Dennis Ritchie","Bjarne Stroustrup"],c:1,cat:"basics",diff:"easy",exp:"Guido van Rossum created Python and released it in 1991."},
-  {q:"Which file extension is used for Python?",opts:[".pyt",".pt",".py",".python"],c:2,cat:"basics",diff:"easy",exp:"Python files use the .py extension."},
-  {q:"Which keyword starts a function in Python?",opts:["function","def","define","func"],c:1,cat:"basics",diff:"easy",exp:"The 'def' keyword is used to define a function in Python."},
-  {q:"Python was first released in?",opts:["1989","1991","1995","2000"],c:1,cat:"basics",diff:"easy",exp:"Python 0.9.0 was released in February 1991."},
-  {q:"Symbol used for single-line comments?",opts:["//","/*","#","--"],c:2,cat:"basics",diff:"easy",exp:"In Python, # is used to write single-line comments."},
-  {q:"How do you output text in Python?",opts:["echo()","console()","print()","write()"],c:2,cat:"basics",diff:"easy",exp:"print() is Python's built-in function for outputting text."},
-  {q:"Is Python case-sensitive?",opts:["No","Only for strings","Yes","Depends on OS"],c:2,cat:"basics",diff:"easy",exp:"Python is fully case-sensitive. 'var' and 'Var' are different identifiers."},
-  {q:"What does 'pip' stand for?",opts:["Python Install Pack","Preferred Install Program","Pip Installs Packages","Process Item Plus"],c:2,cat:"basics",diff:"easy",exp:"pip is a recursive acronym: 'Pip Installs Packages'."},
-  {q:"Which is a valid Python variable name?",opts:["2var","var-2","var_2","var 2"],c:2,cat:"basics",diff:"easy",exp:"Variable names cannot start with a number, contain hyphens, or have spaces."},
-  {q:"Python is primarily?",opts:["Compiled","Interpreted","Both","Neither"],c:1,cat:"basics",diff:"easy",exp:"Python is an interpreted language — code is executed line by line at runtime."},
-  {q:"What is PEP 8?",opts:["A module","A style guide","A version","A compiler"],c:1,cat:"basics",diff:"easy",exp:"PEP 8 is Python's official style guide for writing clean, readable code."},
-  {q:"How do you import a module?",opts:["get","require","import","include"],c:2,cat:"basics",diff:"easy",exp:"The 'import' keyword is used to include modules in Python."},
-  {q:"Correct way to write a multi-line string?",opts:["\"\"\"text\"\"\"","'text'","#text","(text)"],c:0,cat:"basics",diff:"easy",exp:"Triple quotes (\"\"\" or ''') are used for multi-line strings in Python."},
-  {q:"What does 'pass' do in Python?",opts:["Exits the program","Does nothing (placeholder)","Skips one iteration","Raises an error"],c:1,cat:"basics",diff:"easy",exp:"'pass' is a null statement used as a placeholder where code is required syntactically."},
-  {q:"Which operator is used for exponentiation?",opts:["^","exp()","**","^^"],c:2,cat:"basics",diff:"easy",exp:"In Python, ** is the exponentiation operator. 2**3 = 8."},
-  {q:"Output of 2 ** 3?",opts:["6","8","9","5"],c:1,cat:"basics",diff:"easy",exp:"2 ** 3 = 2 × 2 × 2 = 8."},
-  {q:"Floor division operator in Python?",opts:["/","//","%","**"],c:1,cat:"basics",diff:"easy",exp:"// performs floor division, e.g. 7 // 2 = 3."},
-  {q:"Modulus operator in Python?",opts:["/","//","%","mod"],c:2,cat:"basics",diff:"easy",exp:"% returns the remainder. 7 % 3 = 1."},
-  {q:"Operator used to compare two values?",opts:["=","==","===","is"],c:1,cat:"basics",diff:"easy",exp:"== checks equality. = is assignment, === doesn't exist in Python."},
-  {q:"Logical AND operator in Python?",opts:["&&","and","&","AND"],c:1,cat:"basics",diff:"easy",exp:"Python uses the keyword 'and' for logical AND operations."},
-  {q:"Logical OR operator in Python?",opts:["||","or","|","OR"],c:1,cat:"basics",diff:"easy",exp:"Python uses the keyword 'or' for logical OR operations."},
-  {q:"Logical NOT operator in Python?",opts:["!","not","~","NO"],c:1,cat:"basics",diff:"easy",exp:"Python uses the keyword 'not' for logical negation."},
-  {q:"Output of 'Hi' * 2?",opts:["HiHi","Hi Hi","Error","2Hi"],c:0,cat:"basics",diff:"easy",exp:"String repetition: 'Hi' * 2 produces 'HiHi'."},
-  {q:"Statement to exit a loop?",opts:["stop","exit","break","quit"],c:2,cat:"basics",diff:"easy",exp:"'break' terminates the nearest enclosing loop."},
-  {q:"Statement to skip to next iteration?",opts:["skip","next","continue","pass"],c:2,cat:"basics",diff:"easy",exp:"'continue' skips the rest of the current loop iteration."},
-  {q:"Keyword for 'else if' in Python?",opts:["else if","elif","ifnot","otherwise"],c:1,cat:"basics",diff:"easy",exp:"Python uses 'elif' instead of 'else if'."},
-  {q:"How to check data type of variable x?",opts:["type(x)","typeof(x)","get_type(x)","is_type(x)"],c:0,cat:"basics",diff:"easy",exp:"type() is the built-in function to check an object's type."},
-  {q:"Convert integer to string?",opts:["str()","toString()","convert()","text()"],c:0,cat:"basics",diff:"easy",exp:"str() converts an integer (or other type) to a string."},
-  {q:"Convert string to integer?",opts:["int()","toInt()","convert()","number()"],c:0,cat:"basics",diff:"easy",exp:"int() converts a string or float to an integer."},
-  {q:"What is __name__ == '__main__' used for?",opts:["Naming classes","Running code only when the file is executed directly","Importing modules","Defining main()"],c:1,cat:"basics",diff:"medium",exp:"This idiom allows code to run only when the script is executed directly, not when imported."},
+      /* ── ADVANCED PYTHON (30) ── */
+      {q: "What is a list comprehension?", opts: ["A sorted list", "A concise way to create a list", "A type of dictionary", "A recursive list"], c: 1, cat: "advanced", diff: "medium", exp: "List comprehensions: [expr for item in iterable if condition] — concise and fast."},
+      {q: "Output of [x*2 for x in range(3)]?", opts: ["[0,2,4]", "[1,2,3]", "[2,4,6]", "[0,1,2]"], c: 0, cat: "advanced", diff: "medium", exp: "range(3) = 0,1,2 → multiplied by 2 = [0, 2, 4]."},
+      {q: "What is a dictionary comprehension?", opts: ["A sorted dict", "A way to build dicts in one line", "A type of set", "A nested dict"], c: 1, cat: "advanced", diff: "medium", exp: "{k: v for k, v in items} creates a new dict concisely."},
+      {q: "What keyword declares a global variable inside a function?", opts: ["global", "outer", "public", "universal"], c: 0, cat: "advanced", diff: "medium", exp: "'global' tells Python to use the global scope variable, not create a local one."},
+      {q: "What does 'nonlocal' do?", opts: ["Access global vars", "Access enclosing scope variable (not global)", "Create a new scope", "Delete a variable"], c: 1, cat: "advanced", diff: "hard", exp: "'nonlocal' is used inside nested functions to reference the enclosing (not global) scope."},
+      {q: "What is the GIL in Python?", opts: ["Global Integer Limit", "Global Interpreter Lock", "General Import Library", "Graphics Interface Layer"], c: 1, cat: "advanced", diff: "hard", exp: "The GIL (Global Interpreter Lock) prevents multiple threads from executing Python bytecode simultaneously."},
+      {q: "What is a context manager?", opts: ["A memory manager", "An object that manages resources with 'with'", "A thread manager", "A file system utility"], c: 1, cat: "advanced", diff: "medium", exp: "Context managers (used with 'with') ensure proper resource acquisition and release."},
+      {q: "Which dunder method implements 'with' statement?", opts: ["__context__", "__with__", "__enter__ and __exit__", "__open__"], c: 2, cat: "advanced", diff: "hard", exp: "__enter__ runs when entering the 'with' block, __exit__ when leaving it."},
+      {q: "What does 'zip()' do?", opts: ["Compresses files", "Pairs elements from multiple iterables", "Sorts two lists", "Flattens a list"], c: 1, cat: "advanced", diff: "medium", exp: "zip() pairs up elements from multiple iterables into tuples."},
+      {q: "What does 'filter()' return?", opts: ["A list", "An iterator of items where function returns True", "A sorted list", "A boolean"], c: 1, cat: "advanced", diff: "medium", exp: "filter(function, iterable) returns an iterator of items for which the function returns True."},
+      {q: "What is 'reduce()' used for?", opts: ["Filtering a list", "Applying a function cumulatively to reduce to one value", "Sorting", "Zipping"], c: 1, cat: "advanced", diff: "hard", exp: "reduce() applies a function cumulatively (from functools) to collapse a sequence to one value."},
+      {q: "What is a namedtuple?", opts: ["A named list", "A tuple with named fields", "A special dict", "A frozen set"], c: 1, cat: "advanced", diff: "hard", exp: "namedtuple (from collections) creates tuple subclasses with named fields for readability."},
+      {q: "What is the purpose of __slots__?", opts: ["Add new methods", "Restrict attribute creation to save memory", "Make a class abstract", "Enable multiple inheritance"], c: 1, cat: "advanced", diff: "hard", exp: "__slots__ restricts instance attributes to a fixed set, reducing memory overhead."},
+      {q: "What does 'is' operator check?", opts: ["Value equality", "Identity (same memory location)", "Type equality", "String equality"], c: 1, cat: "advanced", diff: "medium", exp: "'is' checks identity (same object in memory), not equality. Use == for value comparison."},
+      {q: "What is memoization?", opts: ["Memory management", "Caching function results to avoid redundant computation", "A decorator pattern", "A type of recursion"], c: 1, cat: "advanced", diff: "hard", exp: "Memoization stores results of expensive function calls and returns cached results for same inputs."},
+      {q: "Which decorator adds memoization easily?", opts: ["@cache", "@memoize", "@functools.lru_cache", "@cached"], c: 2, cat: "advanced", diff: "hard", exp: "@functools.lru_cache (or @cache in Python 3.9+) automatically memoizes function results."},
+      {q: "What is a coroutine?", opts: ["A type of loop", "A function that can pause and resume using async/await", "A class method", "A generator"], c: 1, cat: "advanced", diff: "hard", exp: "Coroutines are async functions defined with 'async def' and can be paused with 'await'."},
+      {q: "Keyword to pause a coroutine?", opts: ["pause", "wait", "yield", "await"], c: 3, cat: "advanced", diff: "hard", exp: "'await' suspends a coroutine until the awaited result is ready."},
+      {q: "What is __iter__ used for?", opts: ["Sorting", "Making an object iterable", "Converting to list", "Comparing objects"], c: 1, cat: "advanced", diff: "hard", exp: "__iter__ returns the iterator object, making the class usable in for loops."},
+      {q: "What is __next__ used for?", opts: ["Getting the next item in an iterator", "Moving to the next line", "Next element of a sort", "Calling the next function"], c: 0, cat: "advanced", diff: "hard", exp: "__next__ returns the next item from an iterator; raises StopIteration when done."},
+      {q: "What does the walrus operator ':=' do?", opts: ["Checks equality", "Assigns and returns a value in an expression", "Floor division", "String formatting"], c: 1, cat: "advanced", diff: "hard", exp: "The walrus operator (Python 3.8+) assigns a value to a variable within an expression."},
+      {q: "What is a frozen set?", opts: ["A sorted set", "An immutable set", "An empty set", "A set of frozen items"], c: 1, cat: "advanced", diff: "medium", exp: "frozenset() creates an immutable version of a set — it can be used as a dict key."},
+      {q: "Output of bool([]) in Python?", opts: ["True", "False", "None", "Error"], c: 1, cat: "advanced", diff: "medium", exp: "Empty sequences/collections are falsy in Python. bool([]) = False."},
+      {q: "What are 'dunder' methods?", opts: ["Private methods", "Double underscore special methods", "Deprecated methods", "Debug methods"], c: 1, cat: "advanced", diff: "medium", exp: "Dunder (double underscore) methods like __init__, __str__ are Python's magic methods."},
+      {q: "What is the purpose of __call__?", opts: ["Calls a parent method", "Makes an instance callable like a function", "Defines a constructor", "Initializes variables"], c: 1, cat: "advanced", diff: "hard", exp: "__call__ allows an instance to be called as if it were a function: obj()."},
+      {q: "What is a metaclass?", opts: ["A class for metadata", "A class whose instances are classes", "A decorator", "A type of interface"], c: 1, cat: "advanced", diff: "hard", exp: "A metaclass defines how classes themselves are created and behave."},
+      {q: "What is 'monkey patching'?", opts: ["Testing with mocks", "Dynamically modifying a class or module at runtime", "A debugging technique", "A design pattern"], c: 1, cat: "advanced", diff: "hard", exp: "Monkey patching replaces or extends methods/attributes at runtime, often for testing."},
+      {q: "What does 'assert' do?", opts: ["Prints a message", "Raises AssertionError if condition is False", "Breaks the loop", "Declares a variable"], c: 1, cat: "advanced", diff: "medium", exp: "assert expression raises AssertionError (with optional message) if expression is False."},
+      {q: "What is unpacking in Python?", opts: ["Removing items from a list", "Assigning iterable elements to multiple variables", "Decompressing files", "Flattening a tuple"], c: 1, cat: "advanced", diff: "medium", exp: "Unpacking: a, b, c = [1, 2, 3] assigns each element to a variable."},
+      {q: "What does 'any()' return?", opts: ["True if all items are truthy", "True if at least one item is truthy", "The first truthy item", "A list of truthy items"], c: 1, cat: "advanced", diff: "medium", exp: "any() returns True if at least one element of an iterable is truthy."},
 
-  /* ── DATA TYPES & STRUCTURES (30) ── */
-  {q:"Which data type is immutable?",opts:["List","Dictionary","Set","Tuple"],c:3,cat:"data",diff:"easy",exp:"Tuples are immutable — they cannot be changed after creation."},
-  {q:"Correct way to create a list?",opts:["[]","{}","()","<>"],c:0,cat:"data",diff:"easy",exp:"Lists are created with square brackets []."},
-  {q:"Which creates a Python dictionary?",opts:["[]","{}","()","set()"],c:1,cat:"data",diff:"easy",exp:"Dictionaries are created with curly braces {key: value}."},
-  {q:"Which is NOT a number type in Python?",opts:["int","float","complex","string"],c:3,cat:"data",diff:"easy",exp:"string (str) is not a numeric type. int, float, and complex are."},
-  {q:"How to create a set in Python?",opts:["set[]","set()","[]","( )"],c:1,cat:"data",diff:"easy",exp:"Sets are created with set() or curly braces {1,2,3}."},
-  {q:"Empty set is created by?",opts:["{}","set()","set{}","[]"],c:1,cat:"data",diff:"medium",exp:"{} creates an empty dict, not a set. set() creates an empty set."},
-  {q:"What is a Tuple?",opts:["Mutable ordered list","Immutable ordered sequence","A key-value store","An unordered collection"],c:1,cat:"data",diff:"easy",exp:"A tuple is an immutable, ordered sequence of elements."},
-  {q:"Which collection does NOT allow duplicates?",opts:["List","Tuple","Set","Dictionary values"],c:2,cat:"data",diff:"easy",exp:"Sets automatically remove duplicate values."},
-  {q:"How to get the length of a list?",opts:["len()","size()","count()","length()"],c:0,cat:"data",diff:"easy",exp:"len() returns the number of items in any sequence or collection."},
-  {q:"Method to add an item to a list?",opts:["add()","push()","append()","insert()"],c:2,cat:"data",diff:"easy",exp:"append() adds a single item to the end of a list."},
-  {q:"Method to remove the last item from a list?",opts:["delete()","pop()","remove()","discard()"],c:1,cat:"data",diff:"easy",exp:"pop() removes and returns the last item (or item at index) from a list."},
-  {q:"Which is a Floating point number?",opts:["1","1.0","1+0j","True"],c:1,cat:"data",diff:"easy",exp:"1.0 is a float. 1 is int, 1+0j is complex, True is bool."},
-  {q:"Boolean values in Python start with?",opts:["Lower case","Capital letter","Underscore","Symbols"],c:1,cat:"data",diff:"easy",exp:"Python Booleans are True and False — both start with a capital letter."},
-  {q:"Value of True + True in Python?",opts:["0","1","2","Error"],c:2,cat:"data",diff:"medium",exp:"In Python, True is 1 and False is 0. So True + True = 1 + 1 = 2."},
-  {q:"What is None in Python?",opts:["False","0","A special null object","An empty string"],c:2,cat:"data",diff:"easy",exp:"None is Python's null object, representing the absence of a value."},
-  {q:"Dictionary key must be?",opts:["Mutable","Immutable","Any type","Numbers only"],c:1,cat:"data",diff:"medium",exp:"Dictionary keys must be immutable (strings, numbers, tuples are valid keys)."},
-  {q:"What does 'slicing' do?",opts:["Deletes items","Extracts a portion of a sequence","Joins lists","Sorts elements"],c:1,cat:"data",diff:"easy",exp:"Slicing extracts a sub-sequence using [start:stop:step] notation."},
-  {q:"Output of [1,2,3][1:3]?",opts:["[1,2]","[2,3]","[1,2,3]","[3]"],c:1,cat:"data",diff:"medium",exp:"Slicing [1:3] means from index 1 up to (not including) 3, giving [2,3]."},
-  {q:"How to reverse a list in place?",opts:["list.reverse()","reversed(list)","list[::-1]","list.sort(reverse=True)"],c:0,cat:"data",diff:"medium",exp:"list.reverse() reverses the list in-place. reversed() returns an iterator."},
-  {q:"Which list method sorts in place?",opts:["sort()","ordered()","arrange()","sorted()"],c:0,cat:"data",diff:"easy",exp:"list.sort() sorts the list in place. sorted() returns a new sorted list."},
-  {q:"How to merge two dictionaries in Python 3.9+?",opts:["dict1 + dict2","dict1 | dict2","dict1.merge(dict2)","merge(dict1, dict2)"],c:1,cat:"data",diff:"hard",exp:"The | operator merges dictionaries in Python 3.9+."},
-  {q:"Output of list('abc')?",opts:["['abc']","['a','b','c']","('a','b','c')","Error"],c:1,cat:"data",diff:"medium",exp:"list() on a string creates a list of individual characters."},
-  {q:"How to copy a list safely?",opts:["list2 = list1","list2 = list1.copy()","list2 = list1[:]","Both B and C"],c:3,cat:"data",diff:"medium",exp:"Both .copy() and [:] create shallow copies. Assignment just copies the reference."},
-  {q:"What does dict.get('key', default) do?",opts:["Raises KeyError if missing","Returns default if key missing","Adds the key","Returns None always"],c:1,cat:"data",diff:"medium",exp:"dict.get() safely retrieves a value, returning the default if the key doesn't exist."},
-  {q:"How to get all keys from a dictionary?",opts:["dict.keys()","dict.getkeys()","keys(dict)","dict.all()"],c:0,cat:"data",diff:"easy",exp:"dict.keys() returns a view of all keys in the dictionary."},
-  {q:"String method to remove leading/trailing whitespace?",opts:["clean()","strip()","trim()","cut()"],c:1,cat:"data",diff:"easy",exp:"strip() removes whitespace from both ends. lstrip() and rstrip() for one side."},
-  {q:"What is an f-string?",opts:["Function string","Formatted string literal","Fixed string","Fast string"],c:1,cat:"data",diff:"easy",exp:"f-strings (f'...') allow inline expression evaluation inside string literals."},
-  {q:"String method to join a list?",opts:["join()","merge()","concat()","add()"],c:0,cat:"data",diff:"easy",exp:"'separator'.join(list) joins list elements into a string."},
-  {q:"Output of 'python'.upper()?",opts:["Python","PYTHON","python","PYthon"],c:1,cat:"data",diff:"easy",exp:".upper() converts all characters to uppercase."},
-  {q:"What does enumerate() do?",opts:["Counts elements","Returns index-value pairs","Sorts a list","Filters a list"],c:1,cat:"data",diff:"medium",exp:"enumerate() returns an iterator of (index, value) tuples for a sequence."},
+      /* ── STANDARD LIBRARY (30) ── */
+      {q: "Which module handles regular expressions?", opts: ["regex", "re", "regexp", "pattern"], c: 1, cat: "stdlib", diff: "easy", exp: "The 're' module provides functions for matching patterns using regular expressions."},
+      {q: "Which module is used for date and time?", opts: ["date", "time", "datetime", "calendar"], c: 2, cat: "stdlib", diff: "easy", exp: "The 'datetime' module handles both date and time operations."},
+      {q: "Which module is used for file paths?", opts: ["os", "path", "pathlib", "files"], c: 2, cat: "stdlib", diff: "medium", exp: "'pathlib' provides an object-oriented interface for filesystem paths (Python 3.4+)."},
+      {q: "How to read a JSON file in Python?", opts: ["json.read()", "json.load()", "json.parse()", "json.open()"], c: 1, cat: "stdlib", diff: "easy", exp: "json.load(file) parses JSON from a file object. json.loads() parses from a string."},
+      {q: "Which module provides random number generation?", opts: ["rand", "random", "randint", "numbers"], c: 1, cat: "stdlib", diff: "easy", exp: "The 'random' module provides functions like random(), randint(), choice(), shuffle()."},
+      {q: "How to get a random integer between 1 and 10?", opts: ["random.rand(1,10)", "random.randint(1,10)", "random.int(1,10)", "random.number(1,10)"], c: 1, cat: "stdlib", diff: "easy", exp: "random.randint(a, b) returns a random integer N such that a <= N <= b."},
+      {q: "Which module provides mathematical functions?", opts: ["maths", "math", "calc", "numbers"], c: 1, cat: "stdlib", diff: "easy", exp: "The 'math' module provides functions like sqrt(), floor(), ceil(), pi, etc."},
+      {q: "Which module is used for working with CSV files?", opts: ["csv", "file", "excel", "table"], c: 0, cat: "stdlib", diff: "easy", exp: "The 'csv' module provides reader and writer objects for CSV files."},
+      {q: "How to open a file in write mode?", opts: ["open('f','r')", "open('f','w')", "open('f','a')", "open('f','x')"], c: 1, cat: "stdlib", diff: "easy", exp: "'w' mode opens for writing (creates or truncates). 'a' appends, 'r' reads."},
+      {q: "Which module is used for working with OS operations?", opts: ["sys", "os", "system", "shell"], c: 1, cat: "stdlib", diff: "easy", exp: "The 'os' module provides functions for interacting with the operating system."},
+      {q: "What does os.path.exists() check?", opts: ["If a path is a file", "If a path exists", "If a directory is empty", "If you have permissions"], c: 1, cat: "stdlib", diff: "easy", exp: "os.path.exists() returns True if the path (file or directory) exists."},
+      {q: "Which module is used for command-line argument parsing?", opts: ["args", "argparse", "sys.argv", "cli"], c: 1, cat: "stdlib", diff: "medium", exp: "'argparse' provides a comprehensive framework for parsing command-line arguments."},
+      {q: "How to copy a file in Python?", opts: ["os.copy()", "shutil.copy()", "file.copy()", "copy.file()"], c: 1, cat: "stdlib", diff: "medium", exp: "shutil.copy(src, dst) copies a file from src to dst."},
+      {q: "Which module provides the Counter class?", opts: ["counting", "statistics", "collections", "itertools"], c: 2, cat: "stdlib", diff: "medium", exp: "collections.Counter is a dict subclass for counting hashable objects."},
+      {q: "What does itertools.chain() do?", opts: ["Sorts iterables", "Chains multiple iterables into one", "Filters an iterable", "Creates combinations"], c: 1, cat: "stdlib", diff: "medium", exp: "itertools.chain(*iterables) chains multiple iterables end-to-end as a single iterator."},
+      {q: "What does sys.exit() do?", opts: ["Reboots the system", "Exits the Python interpreter", "Closes a file", "Clears memory"], c: 1, cat: "stdlib", diff: "easy", exp: "sys.exit() raises SystemExit to exit the Python interpreter."},
+      {q: "Which function in 'os' lists directory contents?", opts: ["os.dir()", "os.list()", "os.listdir()", "os.files()"], c: 2, cat: "stdlib", diff: "easy", exp: "os.listdir(path) returns a list of entries in the directory at the given path."},
+      {q: "Which module is used for threading?", opts: ["thread", "concurrent", "threading", "parallel"], c: 2, cat: "stdlib", diff: "medium", exp: "The 'threading' module provides Thread class and synchronization primitives."},
+      {q: "Which module is used for multiprocessing?", opts: ["parallel", "processes", "multiprocessing", "subprocess"], c: 2, cat: "stdlib", diff: "medium", exp: "'multiprocessing' module allows spawning processes to bypass the GIL for true parallelism."},
+      {q: "What does pickle do?", opts: ["Encrypts data", "Serializes Python objects to bytes", "Compresses files", "Converts to JSON"], c: 1, cat: "stdlib", diff: "medium", exp: "pickle serializes (pickles) Python objects to byte streams and deserializes them."},
+      {q: "Which module provides defaultdict?", opts: ["dict", "collections", "builtins", "typing"], c: 1, cat: "stdlib", diff: "medium", exp: "collections.defaultdict is a dict subclass with a default factory for missing keys."},
+      {q: "What does 'hashlib' provide?", opts: ["Hash tables", "Cryptographic hash functions", "Password hashing only", "File checksums only"], c: 1, cat: "stdlib", diff: "medium", exp: "hashlib provides algorithms like MD5, SHA-256 for cryptographic hashing."},
+      {q: "Which module handles HTTP requests in the standard library?", opts: ["requests", "http.client", "urllib", "httplib"], c: 2, cat: "stdlib", diff: "medium", exp: "'urllib' is in the standard library. 'requests' is a popular third-party library."},
+      {q: "What does 'functools.partial' do?", opts: ["Returns a partial string", "Creates a new function with some arguments pre-filled", "Partially sorts a list", "Compares two functions"], c: 1, cat: "stdlib", diff: "hard", exp: "functools.partial creates a new function with some arguments of the original pre-set."},
+      {q: "What does 'contextlib.contextmanager' do?", opts: ["Creates file contexts", "Turns a generator into a context manager", "Manages threads", "Handles imports"], c: 1, cat: "stdlib", diff: "hard", exp: "@contextlib.contextmanager lets you write context managers using generator functions."},
+      {q: "Which module provides OrderedDict?", opts: ["dict", "builtins", "collections", "typing"], c: 2, cat: "stdlib", diff: "medium", exp: "collections.OrderedDict remembers insertion order (built-in dict also does this in Python 3.7+)."},
+      {q: "What does 'inspect' module do?", opts: ["Checks syntax", "Introspects live objects (classes, functions, frames)", "Validates types", "Measures performance"], c: 1, cat: "stdlib", diff: "hard", exp: "The 'inspect' module provides functions for examining live objects and source code."},
+      {q: "Which module is used for unit testing?", opts: ["test", "pytest", "unittest", "testlib"], c: 2, cat: "stdlib", diff: "easy", exp: "'unittest' is Python's built-in testing framework, inspired by JUnit."},
+      {q: "What does 'logging' module provide?", opts: ["Print statements", "A flexible event logging system", "Error handling", "Debug breakpoints"], c: 1, cat: "stdlib", diff: "easy", exp: "The 'logging' module provides a configurable logging system with levels (DEBUG, INFO, WARNING...)."},
+      {q: "What does 'struct' module do?", opts: ["Defines classes", "Packs/unpacks binary data", "Creates structures", "Handles strings"], c: 1, cat: "stdlib", diff: "hard", exp: "'struct' converts between Python values and C structs represented as bytes."},
+    ];
 
-  /* ── FUNCTIONS & OOP (30) ── */
-  {q:"Keyword to create a class?",opts:["object","define","class","new"],c:2,cat:"functions",diff:"easy",exp:"'class' keyword is used to define a class in Python."},
-  {q:"What does 'self' represent in a class?",opts:["Parent class","The instance itself","Global scope","Static method"],c:1,cat:"functions",diff:"easy",exp:"'self' refers to the current instance of the class."},
-  {q:"Name of the constructor method?",opts:["__init__","__start__","__main__","__create__"],c:0,cat:"functions",diff:"easy",exp:"__init__ is called automatically when a new object is created."},
-  {q:"Lambda refers to?",opts:["Classes","Anonymous functions","Loops","Modules"],c:1,cat:"functions",diff:"easy",exp:"A lambda is a small anonymous function defined with the lambda keyword."},
-  {q:"What does *args allow?",opts:["Keyword arguments","Variable number of positional arguments","Default values","Only one argument"],c:1,cat:"functions",diff:"medium",exp:"*args collects extra positional arguments into a tuple."},
-  {q:"What does **kwargs allow?",opts:["Multiple return values","Variable keyword arguments","Default arguments","Only integers"],c:1,cat:"functions",diff:"medium",exp:"**kwargs collects extra keyword arguments into a dictionary."},
-  {q:"What is a decorator in Python?",opts:["A class method","A function that modifies another function","A type of variable","A loop construct"],c:1,cat:"functions",diff:"medium",exp:"A decorator is a function that wraps another function to modify its behavior."},
-  {q:"What is a generator?",opts:["A function that returns a list","A function using 'yield' to produce values lazily","A type of decorator","A class with __next__"],c:1,cat:"functions",diff:"medium",exp:"Generators use 'yield' to produce values one at a time, saving memory."},
-  {q:"Keyword to produce a value from a generator?",opts:["return","yield","produce","give"],c:1,cat:"functions",diff:"medium",exp:"'yield' pauses the function and sends a value to the caller."},
-  {q:"What is inheritance in OOP?",opts:["Copying code","A class acquiring properties of another class","Deleting objects","Importing modules"],c:1,cat:"functions",diff:"easy",exp:"Inheritance allows a class to inherit attributes and methods from a parent class."},
-  {q:"How to call a parent class method?",opts:["parent.method()","super().method()","base.method()","this.method()"],c:1,cat:"functions",diff:"medium",exp:"super() returns a proxy to the parent class, allowing access to its methods."},
-  {q:"What is encapsulation?",opts:["Hiding implementation details","Inheriting from a parent","Writing loops","Importing libraries"],c:0,cat:"functions",diff:"medium",exp:"Encapsulation bundles data and methods while restricting direct access."},
-  {q:"What is polymorphism?",opts:["Multiple inheritance","One interface, many implementations","Immutable variables","Recursive functions"],c:1,cat:"functions",diff:"medium",exp:"Polymorphism allows objects of different classes to be treated as the same type."},
-  {q:"Which keyword makes a variable class-level (not instance)?",opts:["static","class","global","shared"],c:1,cat:"functions",diff:"hard",exp:"In Python, variables defined directly in the class body (not in __init__) are class-level."},
-  {q:"What does @staticmethod do?",opts:["Binds to the instance","Binds to the class","Has no access to class or instance","Makes it private"],c:2,cat:"functions",diff:"hard",exp:"A static method has no access to cls or self — it's like a regular function inside a class."},
-  {q:"What does @classmethod do?",opts:["Takes self as first arg","Takes cls as first arg","Has no arguments","Is called automatically"],c:1,cat:"functions",diff:"hard",exp:"@classmethod takes the class (cls) as its first argument, not the instance."},
-  {q:"What is a recursive function?",opts:["A function with no return","A function that calls itself","A function with *args","A generator"],c:1,cat:"functions",diff:"easy",exp:"A recursive function is one that calls itself as part of its execution."},
-  {q:"Default return value of a function with no return?",opts:["0","False","None","Empty string"],c:2,cat:"functions",diff:"easy",exp:"Functions without a return statement (or with bare return) return None."},
-  {q:"How to define a default parameter?",opts:["def f(x=0)","def f(x:0)","def f(x->0)","def f(default x)"],c:0,cat:"functions",diff:"easy",exp:"Default parameters are defined with = in the function signature."},
-  {q:"What is a closure?",opts:["A locked file","A function remembering its enclosing scope","A type of decorator","An abstract class"],c:1,cat:"functions",diff:"hard",exp:"A closure is a nested function that captures variables from its enclosing scope."},
-  {q:"What is 'duck typing'?",opts:["Checking types explicitly","If it walks like a duck... (type by behavior)","Using dunder methods","A testing pattern"],c:1,cat:"functions",diff:"hard",exp:"Duck typing means an object's suitability is determined by its methods, not its type."},
-  {q:"How to make an attribute 'private' by convention?",opts:["private attr","attr()","_attr or __attr","#attr"],c:2,cat:"functions",diff:"medium",exp:"Convention: _attr is 'protected', __attr triggers name mangling (stronger private)."},
-  {q:"What does __str__ do?",opts:["Converts to bytes","Returns string representation of the object","Checks string type","Compares objects"],c:1,cat:"functions",diff:"medium",exp:"__str__ defines what print() or str() shows for an object."},
-  {q:"What is method overriding?",opts:["Adding a new method","Replacing a parent method in a child class","Calling two methods at once","Deleting a method"],c:1,cat:"functions",diff:"medium",exp:"Method overriding means redefining a parent class method in the child class."},
-  {q:"How to handle exceptions in Python?",opts:["try/except","do/catch","try/catch","error/handle"],c:0,cat:"functions",diff:"easy",exp:"Python uses try/except blocks. The 'except' block catches the exception."},
-  {q:"Keyword to raise an exception manually?",opts:["throw","raise","error","except"],c:1,cat:"functions",diff:"easy",exp:"'raise' is used to manually trigger an exception."},
-  {q:"What does 'finally' do?",opts:["Catches errors","Runs always, regardless of exceptions","Ends the program","Skips the error"],c:1,cat:"functions",diff:"medium",exp:"The 'finally' block always executes, whether or not an exception occurred."},
-  {q:"What is __repr__?",opts:["Formal string representation for developers","User-friendly string","A decorator","A class method"],c:0,cat:"functions",diff:"hard",exp:"__repr__ returns an unambiguous string representation useful for debugging."},
-  {q:"What is a property in Python?",opts:["A class variable","A decorator that makes a method act like an attribute","A type of dict","A static method"],c:1,cat:"functions",diff:"hard",exp:"@property allows a method to be accessed like an attribute without parentheses."},
-  {q:"What does 'map()' do?",opts:["Filters elements","Applies a function to every item in an iterable","Sorts a list","Flattens nested lists"],c:1,cat:"functions",diff:"medium",exp:"map(function, iterable) applies the function to each element and returns an iterator."},
+    /* ═══════════════════════════════════════
+       SETTINGS & STATE
+    ═══════════════════════════════════════ */
+    let questions = [], idx = 0, score = 0, correct = 0, wrong = 0;
+    let canAnswer = true, timerSecs = 0, timerInterval = null;
+    let ll50Used = false, llSkipUsed = false, llHintUsed = false;
+    let totalQ = 10;
+    const PRIZE_PER_Q = 10000;
+    const DIFF_COLORS = {easy: '#10b981', medium: '#f5a623', hard: '#ef4444'};
+    const CAT_LABELS = {basics: 'Basics & Syntax', data: 'Data Types', functions: 'Functions & OOP', advanced: 'Advanced', stdlib: 'Standard Library'};
 
-  /* ── ADVANCED PYTHON (30) ── */
-  {q:"What is a list comprehension?",opts:["A sorted list","A concise way to create a list","A type of dictionary","A recursive list"],c:1,cat:"advanced",diff:"medium",exp:"List comprehensions: [expr for item in iterable if condition] — concise and fast."},
-  {q:"Output of [x*2 for x in range(3)]?",opts:["[0,2,4]","[1,2,3]","[2,4,6]","[0,1,2]"],c:0,cat:"advanced",diff:"medium",exp:"range(3) = 0,1,2 → multiplied by 2 = [0, 2, 4]."},
-  {q:"What is a dictionary comprehension?",opts:["A sorted dict","A way to build dicts in one line","A type of set","A nested dict"],c:1,cat:"advanced",diff:"medium",exp:"{k: v for k, v in items} creates a new dict concisely."},
-  {q:"What keyword declares a global variable inside a function?",opts:["global","outer","public","universal"],c:0,cat:"advanced",diff:"medium",exp:"'global' tells Python to use the global scope variable, not create a local one."},
-  {q:"What does 'nonlocal' do?",opts:["Access global vars","Access enclosing scope variable (not global)","Create a new scope","Delete a variable"],c:1,cat:"advanced",diff:"hard",exp:"'nonlocal' is used inside nested functions to reference the enclosing (not global) scope."},
-  {q:"What is the GIL in Python?",opts:["Global Integer Limit","Global Interpreter Lock","General Import Library","Graphics Interface Layer"],c:1,cat:"advanced",diff:"hard",exp:"The GIL (Global Interpreter Lock) prevents multiple threads from executing Python bytecode simultaneously."},
-  {q:"What is a context manager?",opts:["A memory manager","An object that manages resources with 'with'","A thread manager","A file system utility"],c:1,cat:"advanced",diff:"medium",exp:"Context managers (used with 'with') ensure proper resource acquisition and release."},
-  {q:"Which dunder method implements 'with' statement?",opts:["__context__","__with__","__enter__ and __exit__","__open__"],c:2,cat:"advanced",diff:"hard",exp:"__enter__ runs when entering the 'with' block, __exit__ when leaving it."},
-  {q:"What does 'zip()' do?",opts:["Compresses files","Pairs elements from multiple iterables","Sorts two lists","Flattens a list"],c:1,cat:"advanced",diff:"medium",exp:"zip() pairs up elements from multiple iterables into tuples."},
-  {q:"What does 'filter()' return?",opts:["A list","An iterator of items where function returns True","A sorted list","A boolean"],c:1,cat:"advanced",diff:"medium",exp:"filter(function, iterable) returns an iterator of items for which the function returns True."},
-  {q:"What is 'reduce()' used for?",opts:["Filtering a list","Applying a function cumulatively to reduce to one value","Sorting","Zipping"],c:1,cat:"advanced",diff:"hard",exp:"reduce() applies a function cumulatively (from functools) to collapse a sequence to one value."},
-  {q:"What is a namedtuple?",opts:["A named list","A tuple with named fields","A special dict","A frozen set"],c:1,cat:"advanced",diff:"hard",exp:"namedtuple (from collections) creates tuple subclasses with named fields for readability."},
-  {q:"What is the purpose of __slots__?",opts:["Add new methods","Restrict attribute creation to save memory","Make a class abstract","Enable multiple inheritance"],c:1,cat:"advanced",diff:"hard",exp:"__slots__ restricts instance attributes to a fixed set, reducing memory overhead."},
-  {q:"What does 'is' operator check?",opts:["Value equality","Identity (same memory location)","Type equality","String equality"],c:1,cat:"advanced",diff:"medium",exp:"'is' checks identity (same object in memory), not equality. Use == for value comparison."},
-  {q:"What is memoization?",opts:["Memory management","Caching function results to avoid redundant computation","A decorator pattern","A type of recursion"],c:1,cat:"advanced",diff:"hard",exp:"Memoization stores results of expensive function calls and returns cached results for same inputs."},
-  {q:"Which decorator adds memoization easily?",opts:["@cache","@memoize","@functools.lru_cache","@cached"],c:2,cat:"advanced",diff:"hard",exp:"@functools.lru_cache (or @cache in Python 3.9+) automatically memoizes function results."},
-  {q:"What is a coroutine?",opts:["A type of loop","A function that can pause and resume using async/await","A class method","A generator"],c:1,cat:"advanced",diff:"hard",exp:"Coroutines are async functions defined with 'async def' and can be paused with 'await'."},
-  {q:"Keyword to pause a coroutine?",opts:["pause","wait","yield","await"],c:3,cat:"advanced",diff:"hard",exp:"'await' suspends a coroutine until the awaited result is ready."},
-  {q:"What is __iter__ used for?",opts:["Sorting","Making an object iterable","Converting to list","Comparing objects"],c:1,cat:"advanced",diff:"hard",exp:"__iter__ returns the iterator object, making the class usable in for loops."},
-  {q:"What is __next__ used for?",opts:["Getting the next item in an iterator","Moving to the next line","Next element of a sort","Calling the next function"],c:0,cat:"advanced",diff:"hard",exp:"__next__ returns the next item from an iterator; raises StopIteration when done."},
-  {q:"What does the walrus operator ':=' do?",opts:["Checks equality","Assigns and returns a value in an expression","Floor division","String formatting"],c:1,cat:"advanced",diff:"hard",exp:"The walrus operator (Python 3.8+) assigns a value to a variable within an expression."},
-  {q:"What is a frozen set?",opts:["A sorted set","An immutable set","An empty set","A set of frozen items"],c:1,cat:"advanced",diff:"medium",exp:"frozenset() creates an immutable version of a set — it can be used as a dict key."},
-  {q:"Output of bool([]) in Python?",opts:["True","False","None","Error"],c:1,cat:"advanced",diff:"medium",exp:"Empty sequences/collections are falsy in Python. bool([]) = False."},
-  {q:"What are 'dunder' methods?",opts:["Private methods","Double underscore special methods","Deprecated methods","Debug methods"],c:1,cat:"advanced",diff:"medium",exp:"Dunder (double underscore) methods like __init__, __str__ are Python's magic methods."},
-  {q:"What is the purpose of __call__?",opts:["Calls a parent method","Makes an instance callable like a function","Defines a constructor","Initializes variables"],c:1,cat:"advanced",diff:"hard",exp:"__call__ allows an instance to be called as if it were a function: obj()."},
-  {q:"What is a metaclass?",opts:["A class for metadata","A class whose instances are classes","A decorator","A type of interface"],c:1,cat:"advanced",diff:"hard",exp:"A metaclass defines how classes themselves are created and behave."},
-  {q:"What is 'monkey patching'?",opts:["Testing with mocks","Dynamically modifying a class or module at runtime","A debugging technique","A design pattern"],c:1,cat:"advanced",diff:"hard",exp:"Monkey patching replaces or extends methods/attributes at runtime, often for testing."},
-  {q:"What does 'assert' do?",opts:["Prints a message","Raises AssertionError if condition is False","Breaks the loop","Declares a variable"],c:1,cat:"advanced",diff:"medium",exp:"assert expression raises AssertionError (with optional message) if expression is False."},
-  {q:"What is unpacking in Python?",opts:["Removing items from a list","Assigning iterable elements to multiple variables","Decompressing files","Flattening a tuple"],c:1,cat:"advanced",diff:"medium",exp:"Unpacking: a, b, c = [1, 2, 3] assigns each element to a variable."},
-  {q:"What does 'any()' return?",opts:["True if all items are truthy","True if at least one item is truthy","The first truthy item","A list of truthy items"],c:1,cat:"advanced",diff:"medium",exp:"any() returns True if at least one element of an iterable is truthy."},
+    // High score
+    function getHS() {return parseInt(localStorage.getItem('pyquiz_hs') || '0');}
+    function setHS(v) {localStorage.setItem('pyquiz_hs', String(v));}
 
-  /* ── STANDARD LIBRARY (30) ── */
-  {q:"Which module handles regular expressions?",opts:["regex","re","regexp","pattern"],c:1,cat:"stdlib",diff:"easy",exp:"The 're' module provides functions for matching patterns using regular expressions."},
-  {q:"Which module is used for date and time?",opts:["date","time","datetime","calendar"],c:2,cat:"stdlib",diff:"easy",exp:"The 'datetime' module handles both date and time operations."},
-  {q:"Which module is used for file paths?",opts:["os","path","pathlib","files"],c:2,cat:"stdlib",diff:"medium",exp:"'pathlib' provides an object-oriented interface for filesystem paths (Python 3.4+)."},
-  {q:"How to read a JSON file in Python?",opts:["json.read()","json.load()","json.parse()","json.open()"],c:1,cat:"stdlib",diff:"easy",exp:"json.load(file) parses JSON from a file object. json.loads() parses from a string."},
-  {q:"Which module provides random number generation?",opts:["rand","random","randint","numbers"],c:1,cat:"stdlib",diff:"easy",exp:"The 'random' module provides functions like random(), randint(), choice(), shuffle()."},
-  {q:"How to get a random integer between 1 and 10?",opts:["random.rand(1,10)","random.randint(1,10)","random.int(1,10)","random.number(1,10)"],c:1,cat:"stdlib",diff:"easy",exp:"random.randint(a, b) returns a random integer N such that a <= N <= b."},
-  {q:"Which module provides mathematical functions?",opts:["maths","math","calc","numbers"],c:1,cat:"stdlib",diff:"easy",exp:"The 'math' module provides functions like sqrt(), floor(), ceil(), pi, etc."},
-  {q:"Which module is used for working with CSV files?",opts:["csv","file","excel","table"],c:0,cat:"stdlib",diff:"easy",exp:"The 'csv' module provides reader and writer objects for CSV files."},
-  {q:"How to open a file in write mode?",opts:["open('f','r')","open('f','w')","open('f','a')","open('f','x')"],c:1,cat:"stdlib",diff:"easy",exp:"'w' mode opens for writing (creates or truncates). 'a' appends, 'r' reads."},
-  {q:"Which module is used for working with OS operations?",opts:["sys","os","system","shell"],c:1,cat:"stdlib",diff:"easy",exp:"The 'os' module provides functions for interacting with the operating system."},
-  {q:"What does os.path.exists() check?",opts:["If a path is a file","If a path exists","If a directory is empty","If you have permissions"],c:1,cat:"stdlib",diff:"easy",exp:"os.path.exists() returns True if the path (file or directory) exists."},
-  {q:"Which module is used for command-line argument parsing?",opts:["args","argparse","sys.argv","cli"],c:1,cat:"stdlib",diff:"medium",exp:"'argparse' provides a comprehensive framework for parsing command-line arguments."},
-  {q:"How to copy a file in Python?",opts:["os.copy()","shutil.copy()","file.copy()","copy.file()"],c:1,cat:"stdlib",diff:"medium",exp:"shutil.copy(src, dst) copies a file from src to dst."},
-  {q:"Which module provides the Counter class?",opts:["counting","statistics","collections","itertools"],c:2,cat:"stdlib",diff:"medium",exp:"collections.Counter is a dict subclass for counting hashable objects."},
-  {q:"What does itertools.chain() do?",opts:["Sorts iterables","Chains multiple iterables into one","Filters an iterable","Creates combinations"],c:1,cat:"stdlib",diff:"medium",exp:"itertools.chain(*iterables) chains multiple iterables end-to-end as a single iterator."},
-  {q:"What does sys.exit() do?",opts:["Reboots the system","Exits the Python interpreter","Closes a file","Clears memory"],c:1,cat:"stdlib",diff:"easy",exp:"sys.exit() raises SystemExit to exit the Python interpreter."},
-  {q:"Which function in 'os' lists directory contents?",opts:["os.dir()","os.list()","os.listdir()","os.files()"],c:2,cat:"stdlib",diff:"easy",exp:"os.listdir(path) returns a list of entries in the directory at the given path."},
-  {q:"Which module is used for threading?",opts:["thread","concurrent","threading","parallel"],c:2,cat:"stdlib",diff:"medium",exp:"The 'threading' module provides Thread class and synchronization primitives."},
-  {q:"Which module is used for multiprocessing?",opts:["parallel","processes","multiprocessing","subprocess"],c:2,cat:"stdlib",diff:"medium",exp:"'multiprocessing' module allows spawning processes to bypass the GIL for true parallelism."},
-  {q:"What does pickle do?",opts:["Encrypts data","Serializes Python objects to bytes","Compresses files","Converts to JSON"],c:1,cat:"stdlib",diff:"medium",exp:"pickle serializes (pickles) Python objects to byte streams and deserializes them."},
-  {q:"Which module provides defaultdict?",opts:["dict","collections","builtins","typing"],c:1,cat:"stdlib",diff:"medium",exp:"collections.defaultdict is a dict subclass with a default factory for missing keys."},
-  {q:"What does 'hashlib' provide?",opts:["Hash tables","Cryptographic hash functions","Password hashing only","File checksums only"],c:1,cat:"stdlib",diff:"medium",exp:"hashlib provides algorithms like MD5, SHA-256 for cryptographic hashing."},
-  {q:"Which module handles HTTP requests in the standard library?",opts:["requests","http.client","urllib","httplib"],c:2,cat:"stdlib",diff:"medium",exp:"'urllib' is in the standard library. 'requests' is a popular third-party library."},
-  {q:"What does 'functools.partial' do?",opts:["Returns a partial string","Creates a new function with some arguments pre-filled","Partially sorts a list","Compares two functions"],c:1,cat:"stdlib",diff:"hard",exp:"functools.partial creates a new function with some arguments of the original pre-set."},
-  {q:"What does 'contextlib.contextmanager' do?",opts:["Creates file contexts","Turns a generator into a context manager","Manages threads","Handles imports"],c:1,cat:"stdlib",diff:"hard",exp:"@contextlib.contextmanager lets you write context managers using generator functions."},
-  {q:"Which module provides OrderedDict?",opts:["dict","builtins","collections","typing"],c:2,cat:"stdlib",diff:"medium",exp:"collections.OrderedDict remembers insertion order (built-in dict also does this in Python 3.7+)."},
-  {q:"What does 'inspect' module do?",opts:["Checks syntax","Introspects live objects (classes, functions, frames)","Validates types","Measures performance"],c:1,cat:"stdlib",diff:"hard",exp:"The 'inspect' module provides functions for examining live objects and source code."},
-  {q:"Which module is used for unit testing?",opts:["test","pytest","unittest","testlib"],c:2,cat:"stdlib",diff:"easy",exp:"'unittest' is Python's built-in testing framework, inspired by JUnit."},
-  {q:"What does 'logging' module provide?",opts:["Print statements","A flexible event logging system","Error handling","Debug breakpoints"],c:1,cat:"stdlib",diff:"easy",exp:"The 'logging' module provides a configurable logging system with levels (DEBUG, INFO, WARNING...)."},
-  {q:"What does 'struct' module do?",opts:["Defines classes","Packs/unpacks binary data","Creates structures","Handles strings"],c:1,cat:"stdlib",diff:"hard",exp:"'struct' converts between Python values and C structs represented as bytes."},
-];
+    // Settings UI
+    const qRange = document.getElementById('q-count-range');
+    const qDisp = document.getElementById('q-count-display');
+    qRange.addEventListener('input', () => {qDisp.textContent = qRange.value;});
 
-/* ═══════════════════════════════════════
-   SETTINGS & STATE
-═══════════════════════════════════════ */
-let questions=[], idx=0, score=0, correct=0, wrong=0;
-let canAnswer=true, timerSecs=0, timerInterval=null;
-let ll50Used=false, llSkipUsed=false, llHintUsed=false;
-let totalQ=10;
-const PRIZE_PER_Q=10000;
-const DIFF_COLORS={easy:'#10b981',medium:'#f5a623',hard:'#ef4444'};
-const CAT_LABELS={basics:'Basics & Syntax',data:'Data Types',functions:'Functions & OOP',advanced:'Advanced',stdlib:'Standard Library'};
+    function startGame() {
+      const cat = document.getElementById('cat-select').value;
+      const diff = document.getElementById('diff-select').value;
+      timerSecs = parseInt(document.getElementById('timer-select').value);
+      totalQ = parseInt(qRange.value);
 
-// High score
-function getHS(){return parseInt(localStorage.getItem('pyquiz_hs')||'0');}
-function setHS(v){localStorage.setItem('pyquiz_hs',String(v));}
+      let pool = ALL_QUESTIONS.filter(q => {
+        if (cat !== 'all' && q.cat !== cat) return false;
+        if (diff !== 'all' && q.diff !== diff) return false;
+        return true;
+      });
+      if (pool.length < totalQ) pool = [...ALL_QUESTIONS];
+      questions = pool.sort(() => Math.random() - .5).slice(0, totalQ);
 
-// Settings UI
-const qRange=document.getElementById('q-count-range');
-const qDisp=document.getElementById('q-count-display');
-qRange.addEventListener('input',()=>{qDisp.textContent=qRange.value;});
+      idx = 0; score = 0; correct = 0; wrong = 0;
+      ll50Used = false; llSkipUsed = false; llHintUsed = false;
+      resetLifelines();
 
-function startGame(){
-  const cat=document.getElementById('cat-select').value;
-  const diff=document.getElementById('diff-select').value;
-  timerSecs=parseInt(document.getElementById('timer-select').value);
-  totalQ=parseInt(qRange.value);
+      show('game-screen');
+      loadQuestion();
+    }
 
-  let pool=ALL_QUESTIONS.filter(q=>{
-    if(cat!=='all'&&q.cat!==cat)return false;
-    if(diff!=='all'&&q.diff!==diff)return false;
-    return true;
-  });
-  if(pool.length<totalQ)pool=[...ALL_QUESTIONS];
-  questions=pool.sort(()=>Math.random()-.5).slice(0,totalQ);
+    function loadQuestion() {
+      canAnswer = true;
+      clearInterval(timerInterval);
+      const d = questions[idx];
 
-  idx=0;score=0;correct=0;wrong=0;
-  ll50Used=false;llSkipUsed=false;llHintUsed=false;
-  resetLifelines();
+      // Header
+      document.getElementById('q-label').textContent = `Q ${idx + 1}/${totalQ}`;
+      document.getElementById('diff-chip').textContent = d.diff.toUpperCase();
+      document.getElementById('diff-chip').style.color = DIFF_COLORS[d.diff] || 'var(--gold)';
+      document.getElementById('prize-chip').textContent = '$' + score.toLocaleString();
+      document.getElementById('cat-tag').textContent = CAT_LABELS[d.cat] || d.cat;
 
-  show('game-screen');
-  loadQuestion();
-}
+      // Progress
+      document.getElementById('prog-bar').style.width = ((idx / totalQ) * 100) + '%';
 
-function loadQuestion(){
-  canAnswer=true;
-  clearInterval(timerInterval);
-  const d=questions[idx];
+      // Question & options
+      document.getElementById('question-text').textContent = d.q;
+      document.getElementById('next-btn').style.display = 'none';
+      document.getElementById('explanation').className = '';
+      document.getElementById('explanation').style.display = 'none';
 
-  // Header
-  document.getElementById('q-label').textContent=`Q ${idx+1}/${totalQ}`;
-  document.getElementById('diff-chip').textContent=d.diff.toUpperCase();
-  document.getElementById('diff-chip').style.color=DIFF_COLORS[d.diff]||'var(--gold)';
-  document.getElementById('prize-chip').textContent='$'+score.toLocaleString();
-  document.getElementById('cat-tag').textContent=CAT_LABELS[d.cat]||d.cat;
+      const grid = document.getElementById('options-grid');
+      grid.innerHTML = '';
+      d.opts.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.id = 'opt-' + i;
+        btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + i)}</span> ${opt}`;
+        btn.onclick = () => checkAnswer(i, btn);
+        grid.appendChild(btn);
+      });
 
-  // Progress
-  document.getElementById('prog-bar').style.width=((idx/totalQ)*100)+'%';
+      // Timer
+      const tc = document.getElementById('timer-chip');
+      if (timerSecs > 0) {
+        tc.style.display = '';
+        let rem = timerSecs;
+        tc.textContent = '⏱ ' + rem;
+        tc.className = 'chip timer-chip';
+        timerInterval = setInterval(() => {
+          rem--;
+          tc.textContent = '⏱ ' + rem;
+          if (rem <= 5) tc.classList.add('warning');
+          if (rem <= 0) {clearInterval(timerInterval); timeUp();}
+        }, 1000);
+      } else {tc.style.display = 'none';}
+    }
 
-  // Question & options
-  document.getElementById('question-text').textContent=d.q;
-  document.getElementById('next-btn').style.display='none';
-  document.getElementById('explanation').className='';
-  document.getElementById('explanation').style.display='none';
+    function timeUp() {
+      if (!canAnswer) return;
+      canAnswer = false;
+      const d = questions[idx];
+      document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+      document.getElementById('opt-' + d.c).classList.add('correct');
+      showExplanation(d.exp);
+      wrong++;
+      document.getElementById('next-btn').style.display = 'block';
+    }
 
-  const grid=document.getElementById('options-grid');
-  grid.innerHTML='';
-  d.opts.forEach((opt,i)=>{
-    const btn=document.createElement('button');
-    btn.className='option-btn';
-    btn.id='opt-'+i;
-    btn.innerHTML=`<span class="option-letter">${String.fromCharCode(65+i)}</span> ${opt}`;
-    btn.onclick=()=>checkAnswer(i,btn);
-    grid.appendChild(btn);
-  });
+    function checkAnswer(i, btn) {
+      if (!canAnswer) return;
+      canAnswer = false;
+      clearInterval(timerInterval);
+      const d = questions[idx];
+      document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+      if (i === d.c) {
+        btn.classList.add('correct');
+        score += PRIZE_PER_Q;
+        correct++;
+        document.getElementById('prize-chip').textContent = '$' + score.toLocaleString();
+      } else {
+        btn.classList.add('wrong');
+        document.getElementById('opt-' + d.c).classList.add('correct');
+        wrong++;
+      }
+      showExplanation(d.exp);
+      document.getElementById('next-btn').style.display = 'block';
+    }
 
-  // Timer
-  const tc=document.getElementById('timer-chip');
-  if(timerSecs>0){
-    tc.style.display='';
-    let rem=timerSecs;
-    tc.textContent='⏱ '+rem;
-    tc.className='chip timer-chip';
-    timerInterval=setInterval(()=>{
-      rem--;
-      tc.textContent='⏱ '+rem;
-      if(rem<=5)tc.classList.add('warning');
-      if(rem<=0){clearInterval(timerInterval);timeUp();}
-    },1000);
-  } else {tc.style.display='none';}
-}
+    function showExplanation(text) {
+      const el = document.getElementById('explanation');
+      el.textContent = '💡 ' + text;
+      el.style.display = 'block';
+      el.className = 'show';
+    }
 
-function timeUp(){
-  if(!canAnswer)return;
-  canAnswer=false;
-  const d=questions[idx];
-  document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
-  document.getElementById('opt-'+d.c).classList.add('correct');
-  showExplanation(d.exp);
-  wrong++;
-  document.getElementById('next-btn').style.display='block';
-}
+    function nextQuestion() {
+      idx++;
+      if (idx < totalQ) {loadQuestion();}
+      else {showResult();}
+    }
 
-function checkAnswer(i,btn){
-  if(!canAnswer)return;
-  canAnswer=false;
-  clearInterval(timerInterval);
-  const d=questions[idx];
-  document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
-  if(i===d.c){
-    btn.classList.add('correct');
-    score+=PRIZE_PER_Q;
-    correct++;
-    document.getElementById('prize-chip').textContent='$'+score.toLocaleString();
-  } else {
-    btn.classList.add('wrong');
-    document.getElementById('opt-'+d.c).classList.add('correct');
-    wrong++;
-  }
-  showExplanation(d.exp);
-  document.getElementById('next-btn').style.display='block';
-}
+    function showResult() {
+      clearInterval(timerInterval);
+      document.getElementById('prog-bar').style.width = '100%';
 
-function showExplanation(text){
-  const el=document.getElementById('explanation');
-  el.textContent='💡 '+text;
-  el.style.display='block';
-  el.className='show';
-}
+      const pct = Math.round((correct / totalQ) * 100);
+      document.getElementById('final-prize').textContent = '$' + score.toLocaleString();
+      document.getElementById('score-sub').textContent = `${correct} correct of ${totalQ} questions`;
+      document.getElementById('r-correct').textContent = correct;
+      document.getElementById('r-wrong').textContent = wrong;
+      document.getElementById('r-acc').textContent = pct + '%';
 
-function nextQuestion(){
-  idx++;
-  if(idx<totalQ){loadQuestion();}
-  else{showResult();}
-}
+      // Emoji & title
+      let emoji, title;
+      if (pct === 100) {emoji = '🏆'; title = 'PERFECT SCORE!';}
+      else if (pct >= 80) {emoji = '🎉'; title = 'EXCELLENT!';}
+      else if (pct >= 60) {emoji = '👏'; title = 'GOOD JOB!';}
+      else if (pct >= 40) {emoji = '📚'; title = 'KEEP LEARNING!';}
+      else {emoji = '💪'; title = 'PRACTICE MORE!';}
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-title').textContent = title;
 
-function showResult(){
-  clearInterval(timerInterval);
-  document.getElementById('prog-bar').style.width='100%';
+      // High score
+      const hs = getHS();
+      const banner = document.getElementById('hs-banner');
+      if (score > hs) {setHS(score); banner.textContent = '🎉 New High Score: $' + score.toLocaleString() + '!'; banner.className = 'high-score-banner show';}
+      else {banner.className = 'high-score-banner';}
 
-  const pct=Math.round((correct/totalQ)*100);
-  document.getElementById('final-prize').textContent='$'+score.toLocaleString();
-  document.getElementById('score-sub').textContent=`${correct} correct of ${totalQ} questions`;
-  document.getElementById('r-correct').textContent=correct;
-  document.getElementById('r-wrong').textContent=wrong;
-  document.getElementById('r-acc').textContent=pct+'%';
+      show('result-screen');
+    }
 
-  // Emoji & title
-  let emoji,title;
-  if(pct===100){emoji='🏆';title='PERFECT SCORE!';}
-  else if(pct>=80){emoji='🎉';title='EXCELLENT!';}
-  else if(pct>=60){emoji='👏';title='GOOD JOB!';}
-  else if(pct>=40){emoji='📚';title='KEEP LEARNING!';}
-  else{emoji='💪';title='PRACTICE MORE!';}
-  document.getElementById('result-emoji').textContent=emoji;
-  document.getElementById('result-title').textContent=title;
+    /* ── Lifelines ── */
+    function resetLifelines() {
+      ['ll-50', 'll-skip', 'll-hint'].forEach(id => {
+        const b = document.getElementById(id); b.disabled = false; b.classList.remove('used');
+      });
+    }
 
-  // High score
-  const hs=getHS();
-  const banner=document.getElementById('hs-banner');
-  if(score>hs){setHS(score);banner.textContent='🎉 New High Score: $'+score.toLocaleString()+'!';banner.className='high-score-banner show';}
-  else{banner.className='high-score-banner';}
+    function lifeline50() {
+      if (ll50Used || !canAnswer) return;
+      ll50Used = true;
+      document.getElementById('ll-50').classList.add('used');
+      document.getElementById('ll-50').disabled = true;
+      const d = questions[idx];
+      const btns = document.querySelectorAll('.option-btn');
+      let removed = 0;
+      btns.forEach((b, i) => {
+        if (i !== d.c && removed < 2) {b.style.opacity = '.25'; b.disabled = true; removed++;}
+      });
+    }
 
-  show('result-screen');
-}
+    function lifelineSkip() {
+      if (llSkipUsed || !canAnswer) return;
+      llSkipUsed = true;
+      document.getElementById('ll-skip').classList.add('used');
+      document.getElementById('ll-skip').disabled = true;
+      clearInterval(timerInterval);
+      canAnswer = false;
+      idx++;
+      if (idx < totalQ) loadQuestion(); else showResult();
+    }
 
-/* ── Lifelines ── */
-function resetLifelines(){
-  ['ll-50','ll-skip','ll-hint'].forEach(id=>{
-    const b=document.getElementById(id);b.disabled=false;b.classList.remove('used');
-  });
-}
+    function lifelineHint() {
+      if (llHintUsed || !canAnswer) return;
+      llHintUsed = true;
+      document.getElementById('ll-hint').classList.add('used');
+      document.getElementById('ll-hint').disabled = true;
+      const d = questions[idx];
+      showExplanation('HINT: ' + d.exp.slice(0, 80) + '...');
+    }
 
-function lifeline50(){
-  if(ll50Used||!canAnswer)return;
-  ll50Used=true;
-  document.getElementById('ll-50').classList.add('used');
-  document.getElementById('ll-50').disabled=true;
-  const d=questions[idx];
-  const btns=document.querySelectorAll('.option-btn');
-  let removed=0;
-  btns.forEach((b,i)=>{
-    if(i!==d.c&&removed<2){b.style.opacity='.25';b.disabled=true;removed++;}
-  });
-}
-
-function lifelineSkip(){
-  if(llSkipUsed||!canAnswer)return;
-  llSkipUsed=true;
-  document.getElementById('ll-skip').classList.add('used');
-  document.getElementById('ll-skip').disabled=true;
-  clearInterval(timerInterval);
-  canAnswer=false;
-  idx++;
-  if(idx<totalQ)loadQuestion();else showResult();
-}
-
-function lifelineHint(){
-  if(llHintUsed||!canAnswer)return;
-  llHintUsed=true;
-  document.getElementById('ll-hint').classList.add('used');
-  document.getElementById('ll-hint').disabled=true;
-  const d=questions[idx];
-  showExplanation('HINT: '+d.exp.slice(0,80)+'...');
-}
-
-/* ── Navigation ── */
-function show(id){
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-function goStart(){clearInterval(timerInterval);show('start-screen');}
-function playAgain(){clearInterval(timerInterval);startGame();}
-</script>
+    /* ── Navigation ── */
+    function show(id) {
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    function goStart() {clearInterval(timerInterval); show('start-screen');}
+    function playAgain() {clearInterval(timerInterval); startGame();}
+  </script>
 </body>
+
 </html>
